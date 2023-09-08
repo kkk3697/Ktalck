@@ -1,0 +1,137 @@
+.container {
+    padding: 20px;
+    border: 1px solid #eaeaea;
+    height: auto ;
+
+  
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .inner_container {
+    max-width: 1000px;  /* 이 부분은 원하는 크기로 설정 */
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);  /* 쉐도우 효과 추가 */
+}
+.container > .form-group,
+.container .form-group {
+    margin-top: 50px;
+}
+#phone_number
+{
+    margin-top :20px;
+    margin-left : 20px;
+}
+.select2-container {
+    width: 30% !important;
+}
+.select2-dropdown {
+    margin-top: 10px;
+}
+
+.application-form-title h1,
+.application-form-title h2,
+.application-form-title p {
+    text-align: center;
+}
+label
+{
+    font-size : 25px; 
+    font-weight: bold;
+}
+.phone-container {
+    display: flex;
+    align-items: center;
+}
+
+.phone-container select,
+.phone-container input {
+    width: 50%;
+    margin-right: 10px;
+}
+
+.timezone-container {
+    display: flex; /* 3줄을 수평 배치 */
+  }
+  #country_code
+  {
+    width:200px;
+  }
+  .timezone-row {
+    display: flex;
+    flex-direction: column; /* 아이템을 수직으로 배치 */
+    margin-right: 60px; /* 오른쪽 여백 추가 */
+  }
+  
+  .timezone-item {
+    display: flex; /* 체크박스와 레이블을 수평 배치 */
+    align-items: center; /* 수평 정렬 */
+    font-size: 25px; /* 글자 크기 */
+    margin-bottom: 15px; /* 아래 여백 추가 */
+  }
+  
+  .timezone-item input[type="checkbox"] {
+    margin-right: 10px; /* 체크박스 오른쪽에 간격 추가 */
+  }
+
+
+#phone_number
+{
+    margin-bottom: 15px;
+}
+input[type="email"],
+select,
+textarea {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #eaeaea;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);  /* 쉐도우 효과 추가 */
+}
+
+.container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);  /* 쉐도우 효과 추가 */
+}
+
+.container button:hover {
+    background-color: #0056b3;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);  /* 호버 시 쉐도우 효과 강화 */
+}
+#introduction
+{
+    height : 150px;
+}
+
+#rules {
+    color: red;
+}
+
+#showTerms {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.container button {
+    width: 100%;
+    height:75px;
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 30px;
+    text-shadow: whit;
+    cursor: pointer;
+}
+

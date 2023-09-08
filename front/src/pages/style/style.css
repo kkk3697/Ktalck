@@ -1,0 +1,7 @@
+.main-content {
+    min-height: calc(95vh - 300px);  /* 화면 높이에서 푸터 높이를 뺀 만큼 */
+    background-color: #f1f1f1;  /* 그레이톤 배경색 */
+    margin: 0;
+    padding: 0;
+  }
+
