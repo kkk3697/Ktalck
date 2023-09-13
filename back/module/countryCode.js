@@ -14,8 +14,7 @@ function getCountryCodes() {
       const exampleNumber = phoneNumberUtil.getExampleNumberForType(region, PNC.MOBILE);
       if (exampleNumber) {
         callingCode = exampleNumber.getCountryCode();
-        console.log("getCountryCodes 함수가 호출됨");
-        console.log("supportedRegions:", supportedRegions);
+      
       } else {
         callingCode = 'Unknown';
       }

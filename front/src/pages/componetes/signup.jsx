@@ -1,26 +1,140 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import '../style/signup.css';
 
 import axios from 'axios';
+import Select from 'react-select';
+
+
 
 const App = () => {
-    
-const [countryCodes, setCountryCodes] = useState([]);
-useEffect(() => {
-    // 국가 코드를 불러오는 함수
-    async function fetchCountryCodes() {
-      try {
-        const response = await axios.get('http://localhost:4020/api/countryCodes');
-        setCountryCodes(response.data);
-      } catch (error) {
-        console.error("API 호출 중 에러 발생:", error);
-      }
-    }
-    
-    fetchCountryCodes();
-  }, []);
+const [searchTerm, setSearchTerm] = useState(""); 
 
+const [countryCodes, setCountryCodes] = useState([]);
+const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);//박스 상태 확인
+const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);//체크 상태 확인
+const [timezones, setTimezones] = useState([]);
+const [showModal, setShowModal] = useState(false);  
+const [selectedCountry, setSelectedCountry] = useState({
+  value: '',
+  label: '-- select --'
+});
+const [selectedOption, setSelectedOption] = useState({
+  value: '82',  // 한국의 국가 코드
+  label: '(82) Korea'
+});
+const options = countryCodes.map(codeInfo => ({
+  value: codeInfo.callingCode,
+  label: `(${codeInfo.callingCode}) ${codeInfo.name}`,
+}));
+const countryOptions = countryCodes.map(codeInfo => ({
+  value: codeInfo.name, // 실제 값
+  label: codeInfo.name // 보여지는 값
+}));
+
+  const openPopup = () => {
+    if (!isCheckboxEnabled) {  // 체크가 안 된 상태에서만 모달 띄우기
+      setShowModal(true);
+    }
+  };
+  const handleCheckboxClick = () => {
+    // 체크박스가 아직 체크되지 않았을 경우에만 모달창을 띄워준다.
+    if (!isCheckboxEnabled) {
+      setShowModal(true);
+    } else {
+      // 이미 체크가 되어 있다면, 체크를 해제한다.
+      setIsCheckboxChecked(false);
+      setIsCheckboxEnabled(false);
+    }
+  };
+  
+  const handleAgree = () => {
+    setIsCheckboxEnabled(true);  // 체크박스를 활성화시킨다.
+    setIsCheckboxChecked(true);  // 체크박스를 체크 상태로 만든다.
+    setShowModal(false);  // 모달을 닫는다.
+  };
+  
+  const handleCancel = () => {
+    setIsCheckboxChecked(false);  // 체크박스를 체크 해제 상태로 만든다.
+    setShowModal(false);  // 모달을 닫는다.
+  };
+  const SignupPopup = ({ show, onHide, onAgree, onCancel }) => (
+    <Modal show={show} onHide={onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title>STUDENT RULES</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div id="scrollBox">
+        <ol>
+            <li>K-talk LIVE has a Xorean Only* policy. Students must speak Korean while they are within the classes except in special circumstances.</li>
+            <li>Students must attend more than three fifths of the classes, otherwise, they will be asked to dismiss from the online class.</li>
+            <li>Students wishing to take an extended holiday or leave of absence must receive written authorization from their teachers.</li>
+            <li>If the student has been absent for more than 10 consecutive sessions, the student will be dismissed from the course.</li>
+            <li> Students are expected to act in accordance with the following Student Code of Conduct These are for eliminating stress, preventing initial problems and creating a safe environment for all. Students who broke any of these rules will be given at least 1 verbal and 1 written warning. If the wrong behavior continues, the student may be considered to be expelled.
+              <ul className="sub-list">
+                <li>Participate in class, take all competency checks, exams and complete all projects</li>
+                <li>Attend class regularly. Dressed appropriately and ready to learn.</li>
+                <li>Students who access to the class more than 10 minutes after the start of class are considered absent and may not enter the classroom.</li>
+                <li>Students are asked to inform their teacher of any changes in their study plans.</li>
+                <li>Students must respect teachers and other students. Bullying, discrimination [e.g. race, religion, sexual orientation and gender] and abuse in any form will not be tolerated and may lead to dismissal,</li>
+                <li>Students are required to turn on audio / video functions during the class. If students do not keep their audio/video on, they may be asked to leave the class by teachers.</li>
+                <li>Students are asked to maintain their background environment quiet for a class. Depending on the severity of the noise from the side of students, they may receive a warning from the teacher and their audio can be turned off by the teacher.</li>
+                <li>Students are requested to acquaint themselves with Zoom and Google Classroom before starting courses.</li>
+                <li>Students are required to complete their homework and hand it in PDF or JPG file format.</li>
+                <li>Students can ask personal questions only on the chatting line or through classroom messenger.</li>
+                <li>Any kind of photo/video shooting or recording of the class is not allowed.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onCancel}>
+          취소
+        </Button>
+        <Button variant="primary" onClick={onAgree}>
+          동의
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+
+useEffect(() => {
+  // 국가 코드를 불러오는 함수
+  async function fetchCountryCodes() {
+    try {
+      const response = await axios.get('http://localhost:4020/api/countryCodes');
+      const countryNames = response.data.map(item => item.name);
+      setCountryCodes(response.data);
+    } catch (error) {
+      console.error("API 호출 중 에러 발생:", error);
+    }
+  }
+  async function fetchTimezones() {
+    try {
+      const response = await axios.get('http://localhost:4020/api/timezones');
+      setTimezones(response.data);
+    } catch (error) {
+      console.error("API 호출 중 에러 발생:", error);
+    }
+  }
+
+  window.addEventListener('message', messageListener);
+  
+  fetchCountryCodes();
+  fetchTimezones();
+
+  return () => {
+    // 컴포넌트 unmount 될 때 이벤트 리스너 해제
+    window.removeEventListener('message', messageListener);
+  };
+}, []);
+
+const messageListener = (event) => {
+  if (event.data === 'agreed') {
+    setIsCheckboxEnabled(true);
+  }
+};
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -29,29 +143,87 @@ useEffect(() => {
     birthMonth: '',
     birthDay: '',
     country_code: '',
-    phone_number: ''
+    language: '',
+    nationality: '',
+    phone_number: '',
+    currentCity: '',
+    timezones: []
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+    const { name, value, type, checked } = e.target;
+    if (type === "checkbox") {
+      setFormData((prevState) => {
+        let updatedTimezones = prevState[name] || [];  // 이미 체크된 값이 있다면 가져오고, 없으면 빈 배열
+        if (checked) {
+          updatedTimezones.push(value); // 체크했다면 추가
+          console.log("Updated state:", formData);
+        } else {
+          updatedTimezones = updatedTimezones.filter(item => item !== value); // 체크 해제했다면 제거
+        }
+        return { ...prevState, [name]: updatedTimezones };
+      });
+    } else {
+      setFormData((prevState) => ({ ...prevState, [name]: value }));
+    }
 
-  // 폼을 제출하는 함수
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form data submitted', formData);
   };
+  
+  
+  
+  // 폼을 제출하는 함수
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (isCheckboxChecked) {
+      const newFormData = {
+        ...formData,
+        email: formData.email,
+        birthYear: formData.birthYear,
+        birthMonth: formData.birthMonth,
+        birthDay: formData.birthDay,
+        country: selectedCountry,
+        language: formData.language,
+        phone_number: formData.phone_number,
+        timezone: formData.timezones,
+        country_code: selectedOption ? selectedOption.value : '',
+        currentCity: formData.currentCity, 
+        firstName: formData.firstName,  
+        lastName: formData.lastName,  
+        nationality: formData.nationality  
+      };
+  
+      try {
+        // 서버로 POST 요청
+        const response = await axios.post('http://localhost:4020/api/signup', newFormData);
+        if (response.status === 200) {
+          // 성공적으로 데이터 전송 완료
+          console.log('Application submitted:', response.data);
+          console.log(newFormData);
+        }
+      } catch (error) {
+        console.error('API 호출 중 에러 발생:', error);
+      }
+    } else {
+      alert('이용 약관에 동의해 주세요.');
+    }
+  };
+  
 
   return (
     <Container className="container">
       <h1>Application Form</h1><br/>
       <h2>for K-talk Live regular paid Korean lessons</h2>
+      <h4>·Please complete and submit this form so that teachers can contact you for the next step.
+          <br/>
+          ·If you'd like to apply for our Free Hangeul Lessons, please exit this page and visit our website at
+          <br/>    
+          http://ktalklive.com
+          or our FB page at 
+          https://www.facebook.com/ktalklive<br/><br/>
+          Thank you very much!<br/></h4>
   
-      <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
     <Form.Group as={Row} className="form-group">
     <Form.Label column sm="2">
       Name in full (First/Last):
@@ -78,7 +250,6 @@ useEffect(() => {
     </Col>
   </Form.Group>
 
-  {/* Email Address */}
   <Form.Group as={Row} className="form-group">
     <Form.Label column sm="2">
       Email Address
@@ -108,6 +279,7 @@ useEffect(() => {
         className="form-control" 
         placeholder="Year" 
         required 
+        onChange={handleChange}
         style={{width: "100px", marginRight: "10px"}}
       />
       <datalist id="birthYears">
@@ -123,6 +295,7 @@ useEffect(() => {
         className="form-control" 
         placeholder="Month" 
         required 
+        onChange={handleChange}
         style={{width: "100px", marginRight: "10px"}}
       />
       <datalist id="birthMonths">
@@ -138,9 +311,9 @@ useEffect(() => {
         className="form-control" 
         placeholder="Day" 
         required 
+        onChange={handleChange}
         style={{width: "100px"}}
       />
-      {/* 여기에 datalist birthDays 추가 */}
       <datalist id="birthDays">
         {[...Array(31).keys()].map(i => i + 1).map(Day => (
           <option key={Day} value={Day} />
@@ -150,63 +323,117 @@ useEffect(() => {
   </Col>
 </Form.Group>
 
-  <Form.Group as={Row} className="form-group">
-    <Form.Label column sm="2">
-      Phone number
-    </Form.Label>
-    <Col sm="10">
-      <div className="phone-container">
-   
-        <Form.Select name="country_code">
-              {countryCodes.map((codeInfo, index) => (
-                <option key={index} value={codeInfo.callingCode}>
-                  ({codeInfo.callingCode}) {codeInfo.name}
-                </option>
-              ))}
-            </Form.Select>     
-        <Form.Control
-          type="text"
-          name="phone_number"
-          required
-        />
-      </div>
-    </Col>
-  </Form.Group>
-  <Form.Group as={Row} className="form-group">
+<Form.Group as={Row} className="form-group">
+  <Form.Label column sm="2">
+    Nationality
+  </Form.Label>
+  <Col sm="10">
+    <Select 
+      options={countryOptions} 
+      isSearchable={true} 
+      value={selectedCountry}
+      onChange={(option) => {
+        setSelectedCountry(option);
+        setFormData({
+          ...formData,
+          nationality: option ? option.value : ''
+        });
+      }}
+    />
+  </Col>
+</Form.Group>
+
+
+<Form.Group as={Row} className="form-group">
     <Form.Label column sm="2">
       Language you use:
     </Form.Label>
     <Col sm="10">
       <Form.Control 
         as="input" 
-        list="countries" 
-        name="country" 
+        list="language" 
+        name="language" 
         placeholder="Up to 3 languages" 
+        onChange={handleChange}
         required />
-      {/* <datalist id="countries"> 여기에 국가나 언어 옵션을 채워넣으면 되겠지 </datalist> */}
     </Col>
   </Form.Group>
 
   <Form.Group as={Row} className="form-group">
-    <h2>Please choose your available class hours in your local time.</h2>
-    <Form.Label>Please indicate your country of residence with states and city:</Form.Label>
-    <Form.Control type="text" name="currentCity" placeholder="country / state / city" />
-  </Form.Group>
+      <Form.Label column sm="2">
+        Phone number
+      </Form.Label>
+      <Col sm="10">
+        <div className="phone-container ">
+          <Select 
+            options={options} 
+            isSearchable={true} 
+            value={selectedOption}
+            onChange={handleChange}
+            className='mb-2 phone_code'
+          />
+          <Form.Control
+            type="text"
+            name="phone_number"
+            className="form-control mb-3"
+            onChange={handleChange}
+            required
+          />
+        </div>
+      </Col>
+    </Form.Group>
   
+    <Form.Group as={Row} className="form-group">
+  <h2>Please choose your available class hours in your local time.</h2>
+      <Form.Group className="timezone-container">
+      {timezones.map((row, rowIndex) => (
+        <div key={rowIndex} className="timezone-row">
+          {row.map((timezone, index) => (
+            <div key={index} className="timezone-item">
+              <Form.Check 
+                type="checkbox" 
+                id={timezone} 
+                name="timezones" 
+                value={timezone} 
+                label={timezone} 
+                onChange={handleChange}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+    </Form.Group>
+  <Form.Label>Please indicate your country of residence with states and city:</Form.Label>
+  <Form.Control 
+  type="text" 
+  name="currentCity" 
+  placeholder="country / state / city" 
+  onChange={handleChange}
+/>
+</Form.Group>
 
-  <Form.Group>
-    <Form.Check 
-      type="checkbox" 
-      label="I agree to the terms and conditions" 
-      id="termsCheckbox" 
-      disabled />
-  </Form.Group>
+
+<div className="d-flex flex-column align-items-center add-margin">
+  <h3>Do you agree to the terms of our Student Rules?</h3>
+  <Form.Check
+    style={{ marginTop: '20px' }}
+    type="checkbox"
+    label="Yes, I agree"
+    id="termsCheckbox"
+    onChange={handleCheckboxClick}
+    checked={isCheckboxChecked}
+
+    
+  />
+</div>
+
+<SignupPopup show={showModal} onHide={() => setShowModal(false)} onAgree={handleAgree} onCancel={handleCancel}/>
+
 
   <Button type="submit">Submit application</Button>
 
-
-</Form>
-    </Container>
+  </Form>
+  </Container>
   );
 };
 

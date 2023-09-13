@@ -13,6 +13,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "antd": "^5.8.6",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "country-list": "^2.3.0",
     "dotenv": "^16.3.1",
@@ -25,8 +26,10 @@
     "react-redux": "^8.1.2",
     "react-resize-detector": "^9.1.0",
     "react-router-dom": "^6.15.0",
+    "react-select": "^5.7.4",
     "sequelize": "^6.32.1",
-    "styled-components": "^6.0.7"
+    "styled-components": "^6.0.7",
+    "timezone": "^1.0.23"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
