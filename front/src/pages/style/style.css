@@ -1,20 +1,64 @@
+/* 공통 스타일 */
+.margin-top-50 {
+  margin-top: 50px;
+}
+
+.margin-bottom-50 {
+  margin-bottom: 50px;
+}
+
+.padding-20 {
+  padding: 20px;
+}
+
+.box-shadow {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.border-radius-5 {
+  border-radius: 5px;
+}
+
+.input-form, textarea, select, input[type="email"] {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* .button, .container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+} */
+
+.button:hover, .container button:hover {
+  background-color: #0056b3;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
 .main-content {
-    min-height: calc(95vh - 300px);  /* 화면 높이에서 푸터 높이를 뺀 만큼 */
-    background-color: #f1f1f1;  /* 그레이톤 배경색 */
-    margin: 0;
-    padding: 0;
-  }
+  min-height: calc(95vh - 300px);  /* 화면 높이에서 푸터 높이를 뺀 만큼 */
+  background-color: #f1f1f1;  /* 그레이톤 배경색 */
+  margin: 0;
+  padding: 0;
+}
 
-  .add-margin h3{
-    margin-top: 20px;  
-    font-size:15px;
-    text-wrap: nowrap;
-    color :red;
-    margin-top: 20px;
-    margin-bottom: 0px;
-  }
+.add-margin h3{
+  margin-top: 20px;  
+  font-size:15px;
+  text-wrap: nowrap;
+  color :red;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
 
-  #termsCheckbox
-  {
-    margin-bottom: 20px ;
-  }
+#termsCheckbox
+{
+  margin-bottom: 20px ;
+}

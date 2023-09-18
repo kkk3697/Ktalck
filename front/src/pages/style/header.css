@@ -1,55 +1,41 @@
 .header {
-    background-color: #e2e2e2;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+  background-color: #e2e2e2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.logo, .title, .nav-links, .login {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.logo::after {
+  content: ' ktack';
+}
+
+.login input {
+  margin-right: 10px;
+}
+.button{
+  margin-left : 10px;
+  padding: 10px;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
   }
-  
   .logo, .title, .nav-links, .login {
-    flex-grow: 1;
-    text-align: center;
+    text-align: left;
+    margin-bottom: 10px;
   }
-  
-  .logo::after {
-    content: ' ktack';
-    /* 로고 옆에 'ktack' 글자를 붙임 */
-  }
-  
-  .login input {
-    margin-right: 10px; 
-    /* 입력창과 버튼 사이에 간격을 줌 */
-  }
-  
-  .button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-right: 20px;
-    border-radius: 5px; 
-    /* 라디우스를 추가해서 모서리를 부드럽게 함 */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-    /* 그림자를 추가 */
-  }
-  
-  .button:hover {
-    background-color: #45a049;
-  }
-  @media (max-width: 768px) {
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 20px;
-    }
-    .logo, .title, .nav-links, .login {
-      text-align: left;
-      margin-bottom: 10px;
-    }
-    .button
-    {
-      margin-top: 10px;
-    }
-  }
+}
