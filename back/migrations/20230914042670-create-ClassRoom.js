@@ -17,6 +17,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      BoardId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Board', // Board 모델을 참조
+          key: 'boardId' // Board 모델의 boardId를 참조
+        }
+      },
       classCategory: {  // 클래스 카테고리(예: 수학, 과학 등)
         type: Sequelize.STRING,
         allowNull: true

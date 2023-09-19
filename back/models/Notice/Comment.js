@@ -1,12 +1,13 @@
+'use strict';
 const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../db');
 
-
-module.exports = (sequelize, DataTypes) => {
-    const Comment = sequelize.define('Comment', {
+module.exports = class Comment extends Model {
+  static init(sequelize) {
+    return super.init({
       commentId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false
       },
       cboardId: {
@@ -33,8 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false
       }
+    }, {
+      sequelize,
+      modelName: 'Comment'
     });
-  
-    return Comment;
-  };
-  
+  }
+}
+
+

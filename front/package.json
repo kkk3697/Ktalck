@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "react-scripts start",
     "start": "webpack-dev-server --open --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1"
-    
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "next-dev": "next dev",
+    "next-build": "next build",
+    "next-start": "next start"
   },
   "keywords": [],
   "author": "",

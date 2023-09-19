@@ -1,4 +1,7 @@
+'use strict';
 const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../db');
+
 const STUDENT_STATES = {    
   PENDING: 0,       //가입 신청상태
   AFTER_MEETING: 1, //줌 미팅 후 상태
@@ -22,7 +25,8 @@ module.exports = class Student extends Model {
           stuNo: {                        //학생번호
             type: DataTypes.INTEGER,
             allowNull: true,  
-            primaryKey: true
+            autoIncrement: true,
+            primaryKey: true,
           },
           Nickname:             //별칭
           {
@@ -49,6 +53,9 @@ module.exports = class Student extends Model {
           charset: "utf8mb4",
           collate: "utf8mb4_general_ci",
           sequelize,
+          timestamps: true,
+
+          
         }
       );
     }

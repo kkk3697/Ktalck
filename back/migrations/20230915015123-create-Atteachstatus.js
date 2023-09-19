@@ -6,7 +6,6 @@ module.exports = {
       uid: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false
       },
       cno: {
@@ -21,16 +20,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Student',
-          key: 'stuNo'
+          model: 'StudentClass',
+          key: 'StCID'
         }
       },
       TeacherId: {  // 선생님 아이디
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Teacher',
-          key: 'tno'
+          model: 'TeacherClass',
+          key: 'thCID'
         }
       },
       AttendanceStatus: {  // 출석 상태

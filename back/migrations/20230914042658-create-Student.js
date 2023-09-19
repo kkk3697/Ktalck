@@ -26,6 +26,7 @@ module.exports = {
       stuNo: {                        //학생번호
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
       stuLanguage: {                  //학생이 가능한 언어
@@ -44,7 +45,7 @@ module.exports = {
     }, {
       charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci',
-      timestamps: false,
+      timestamps: true,
     });
   },
 

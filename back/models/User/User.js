@@ -1,5 +1,8 @@
-const DataTypes = require("sequelize");
-const { Model } = DataTypes;
+'use strict';
+const Student = require('./Student');
+const Teacher = require('./Teacher');
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../db');
 
 module.exports = class User extends Model {
   static init(sequelize) {
@@ -8,7 +11,8 @@ module.exports = class User extends Model {
         uNo :{
           type: DataTypes.INTEGER,
           allowNull : false,
-          autoIncrement: true,
+          defaultValue: 1,
+          primaryKey: true,
           unique : true,
         },
         email: {
@@ -19,6 +23,11 @@ module.exports = class User extends Model {
         username: {  // firstName과 lastName을 합친 값
           type: DataTypes.STRING(100),
           allowNull: false,
+        },
+        // 프로필 이미지 경로를 저장하는 필드
+        profileImage: {
+          type: DataTypes.STRING,
+          allowNull: true // 이미지는 선택적이니까 null 허용
         },
         birth: {  // 생년월일
           type: DataTypes.STRING(20),
@@ -45,25 +54,46 @@ module.exports = class User extends Model {
           type: DataTypes.STRING(50),
           allowNull: true,
         },
+        language :{
+          type: DataTypes.STRING(100),
+          allowNull: true,
+        },
         Nationality: {
           type: DataTypes.STRING(50),
           allowNull: true,
         },
-        countrycity: {
-          type: DataTypes.STRING(50),
-          allowNull: true,
-        },
-      
       },
       {
-        modelName: "User",
-        tableName: "User",
-        charset: "utf8mb4",
-        collate: "utf8mb4_general_ci",
-        sequelize,timestamps: false,
-      }
-    );
-  }
+        sequelize,
+        modelName: 'User',
+        tableName: 'User',
+        hooks: {
+          beforeCreate: async (user, options) => {
+            const lastUser = await User.findOne({ order: [['uNo', 'DESC']] });
+            if (lastUser) {
+              user.uNo = lastUser.uNo + 1;
+            } else {
+              user.uNo = 1;
+            }
+            // 이 부분에서 레벨을 확인해서 Student 또는 Teacher 테이블에 데이터를 넣어줘
+            if (user.level === 1) {
+              await Student.create({
+                email: user.email,
+                // ... 다른 필드들
+              });
+            } else if (user.level === 2) {
+              await Teacher.create({
+                email: user.email,
+                // ... 다른 필드들
+              });
+            }
+
+          }
+        },
+        autoIncrement: false, 
+        timestamps: false,
+      });
+    }
   static associate(db) {
     db.User.hasOne(db.Student, {
       foreignKey: 'email',

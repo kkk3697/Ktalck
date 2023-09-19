@@ -1,13 +1,15 @@
 'use strict';
-//결제상태 관리 테이블
-module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('PaymentHistory', {
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../db');
+
+//결제 상태 관리
+module.exports = class PaymentHistory extends Model {
+  static init(sequelize) {
+  return super.init({
       paymentId: {  // 내부적으로 사용되는 고유번호, auto-increment 설정
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true
       },
       invoiceNumber: { // 외부 서비스의 인보이스 번호나 수동 결제의 경우를 위한 필드
         type: DataTypes.STRING,
@@ -55,10 +57,10 @@ module.exports = {
         allowNull: false,
         defaultValue: 'Pending'
       },
-    });
-  },
-
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('PaymentHistory');
+}, 
+{
+  sequelize,  // 데이터베이스 연결 인스턴스
+  modelName: 'PaymentHistory'
+});
   }
-};
+}

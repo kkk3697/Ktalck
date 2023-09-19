@@ -9,7 +9,7 @@ var pool = mysql.createPool({
 
 module.exports.pool = pool;
 
-module.exports.getUsers = function(callback) {
+module.exports.getUser = function(callback) {
   pool.query('SELECT * FROM user', function(error, results, fields) {
     if (error) {
       return callback(error, null);

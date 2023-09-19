@@ -8,7 +8,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true
       },
       // 해당 강의 시수의 클래스 번호, ClassRoom 테이블과 연결
       cno: {
@@ -24,8 +23,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Teacher',
-          key: 'tno'
+          model: 'TeacherClass',
+          key: 'thCID'
         }
       },
       // 해당 강의의 시간 (시수)

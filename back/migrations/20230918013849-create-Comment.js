@@ -8,7 +8,6 @@ module.exports = {
       commentId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false
       },
       cboardId: {

@@ -7,7 +7,6 @@ module.exports = {
       StCID: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false
       },
       stuNo: {

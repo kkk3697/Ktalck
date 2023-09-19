@@ -1,4 +1,6 @@
+'use strict';
 const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../db');
 
 module.exports = class Teacher extends Model {
     static init(sequelize) {
@@ -14,8 +16,8 @@ module.exports = class Teacher extends Model {
         },
           tno:{
             type : DataTypes.INTEGER,
-            primaryKey: true,
             autoIncrement: true,
+            primaryKey: true,
           },
           teaLanguage: {
             type: DataTypes.STRING(100), // teaLanguage: 강사가 가르치는 언어를 저장하는 컬럼  
@@ -33,6 +35,9 @@ module.exports = class Teacher extends Model {
           charset: "utf8mb4",
           collate: "utf8mb4_general_ci",
           sequelize,
+          timestamps: true,
+
+          
         }
       );
     }

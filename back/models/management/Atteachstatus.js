@@ -1,9 +1,12 @@
 //출석 일지 테이블
+'use strict';
 const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../db');
 
-class Atteachstatus extends Model {}
 
-Attendance.init({
+module.exports = class Attendance extends Model {
+  static init(sequelize) {
+  return super.init({
   cno: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -16,16 +19,16 @@ Attendance.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'Student',
-      key: 'stuNo'
+      model: 'StudentClass',
+      key: 'StCID'
     }
   },
   TeacherId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'Teacher',
-      key: 'tno'
+      model: 'TeacherClass',
+      key: 'thCID'
     }
   },
   AttendanceStatus: {
@@ -40,5 +43,5 @@ Attendance.init({
   sequelize,
   modelName: 'Attendance'
 });
-
-module.exports = Atteachstatus;
+  }
+}

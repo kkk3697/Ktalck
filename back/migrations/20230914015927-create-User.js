@@ -1,5 +1,6 @@
 'use strict';
 
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -7,8 +8,9 @@ module.exports = {
     uNo :{
       type: Sequelize.INTEGER,
       allowNull : false,
-      autoIncrement: true,
       unique : true,
+      primaryKey: true,
+      defaultValue: 1,
     },
     email: {
       type: Sequelize.STRING(100),
@@ -27,6 +29,11 @@ module.exports = {
     password: {
       type: Sequelize.STRING(100),
       allowNull: false,
+    },
+    // 프로필 이미지 경로를 저장하는 필드
+    profileImage: {
+      type: Sequelize.STRING,
+      allowNull: true // 이미지는 선택적이니까 null 허용
     },
     currentCity: {
       type: Sequelize.STRING(60),
@@ -49,11 +56,12 @@ module.exports = {
       type: Sequelize.STRING(50),
       allowNull: true,
     },
-    countrycity: {
+    language: {
       type: Sequelize.STRING(50),
       allowNull: true,
     },
   }, {
+    
     charset: 'utf8mb4',
     collate: 'utf8mb4_general_ci',
     timestamps: false,

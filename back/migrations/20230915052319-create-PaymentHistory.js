@@ -6,7 +6,6 @@ module.exports = {
       paymentId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
       },
       invoiceNumber: {
@@ -17,8 +16,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Student',
-          key: 'stuNo',
+          model: 'StudentClass',
+          key: 'StCID',
         },
       },
       amount: {

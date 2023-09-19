@@ -1,10 +1,12 @@
+'use strict';
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../db');
 //강의 시수 테이블
 
-const { Model, DataTypes } = require('sequelize');
 
-class LectureHours extends Model {}
-
-LectureHours.init({
+module.exports = class LectureHours extends Model {
+  static init(sequelize) {
+  return super.init({
   // 강의 시수의 고유번호, auto-increment 설정
   lectureHourId: {
     type: DataTypes.INTEGER,
@@ -26,8 +28,8 @@ LectureHours.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'Teacher',
-      key: 'tno'
+      model: 'TeacherClass',
+      key: 'thCID'
     }
   },
   // 해당 강의의 시간 (시수)
@@ -44,5 +46,5 @@ LectureHours.init({
   sequelize,
   modelName: 'LectureHours'
 });
-
-module.exports = LectureHours;
+  }
+}

@@ -1,10 +1,13 @@
 
 //반 테이블
+'use strict';
 const { Model, DataTypes } = require('sequelize');
+const sequelize = require('./db');
 
-class ClassRoom extends Model {}
-
-ClassRoom.init({
+module.exports = class ClassRoom extends Model {
+  static init(sequelize) {
+    return super.init(
+    {
   cno: {  // 클래스 고유 번호
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -15,6 +18,15 @@ ClassRoom.init({
     type: DataTypes.STRING,
     allowNull: false
   },
+  BoardId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'Board', // Board 모델을 참조
+      key: 'boardId' // Board 모델의 boardId를 참조
+    }
+  }
+ ,  
   classLevel: {  // 클래스 수준(초급, 중급, 고급 등)
     type: DataTypes.STRING,
     allowNull: true
@@ -48,8 +60,10 @@ ClassRoom.init({
     allowNull: true
   },
 }, {
-  sequelize,  
-  modelName: 'ClassRoom'  // 모델 이름
+  sequelize,
+  modelName: 'ClassRoom',
+  timestamps: true,
 });
+  }
+}
 
-module.exports = ClassRoom;

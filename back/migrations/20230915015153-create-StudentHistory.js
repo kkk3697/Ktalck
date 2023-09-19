@@ -6,7 +6,6 @@ module.exports = {
       historyno: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false
       },
       studentId: {  // 학생 아이디

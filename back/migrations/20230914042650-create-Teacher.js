@@ -28,7 +28,7 @@ module.exports = {
     }, {
       charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci',
-      timestamps: false,
+      timestamps: true,
     });
   },
   async down(queryInterface, Sequelize) {
