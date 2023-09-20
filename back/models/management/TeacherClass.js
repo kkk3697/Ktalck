@@ -8,7 +8,7 @@ module.exports = class TeacherClass extends Model {
   return super.init({
   
     thCID: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false
     },  

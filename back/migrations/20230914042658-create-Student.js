@@ -21,7 +21,7 @@ module.exports = {
       Nickname:             //별칭
       {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       stuNo: {                        //학생번호
         type: Sequelize.INTEGER,
@@ -45,7 +45,7 @@ module.exports = {
     }, {
       charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci',
-      timestamps: true,
+      timestamps: true
     });
   },
 

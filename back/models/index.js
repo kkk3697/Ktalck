@@ -25,6 +25,7 @@ const TeacherClass = require('./management/TeacherClass');
 const Atteachstatus = require('./management/Atteachstatus');
 const PaymentHistory = require('./management/PaymentHistory');
 const Review        = require('./management/Reviews');
+const Tutors        = require('./management/Tutors');      
 
 const Board = require('./Notice/Board');
 const Comment = require('./Notice/Comment');
@@ -46,6 +47,8 @@ Comment.init(sequelize);
 Attachments.init(sequelize);
 ClassRoom.init(sequelize);
 Review.init(sequelize);
+Tutors.init(sequelize);
+
 
 // DB에 할당
 db.User = User;
@@ -61,6 +64,7 @@ db.Comment = Comment;
 db.Attachments = Attachments;
 db.ClassRoom = ClassRoom;
 db.Review = Review;
+db.Tutors = Tutors;
 
 // 관계 설정
 Object.keys(db).forEach(modelName => {

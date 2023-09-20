@@ -174,7 +174,32 @@ const messageListener = (event) => {
   // 폼을 제출하는 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const currentYear = new Date().getFullYear();
+    const minYear = 1900;
+    if (formData.birthYear < minYear || formData.birthYear > currentYear) {
+      alert("유효한 생년을 입력해주세요.");
+      return;
+    }
     
+    if (formData.birthMonth < 1 || formData.birthMonth > 12) {
+      alert("유효한 월을 입력해주세요.");
+      return;
+    }
+    
+    if (formData.birthDay < 1 || formData.birthDay > 31) {
+      alert("유효한 일을 입력해주세요.");
+      return;
+    }
+  
+    // 국가 검사
+    const isValidCountry = countryOptions.some(
+      (option) => option.value === formData.nationality
+    );
+    
+    if (!isValidCountry) {
+      alert("유효한 국가를 선택해주세요.");
+      return;
+    }
     if (isCheckboxChecked) {
       const newFormData = {
         ...formData,
@@ -197,15 +222,25 @@ const messageListener = (event) => {
         // 서버로 POST 요청
         const response = await axios.post('http://localhost:4020/api/signup', newFormData);
         if (response.status === 200) {
-          // 성공적으로 데이터 전송 완료
           console.log('Application submitted:', response.data);
-          console.log(newFormData);
-        }
+          console.log(new FormData);
+          
+          // 서버로부터 받은 메시지를 알림으로 띄우고 페이지 리다이렉션
+          alert(response.data.message);
+          if (response.data.redirect) {
+            window.location.href = response.data.redirect;
+          }
+        } 
       } catch (error) {
-        console.error('API 호출 중 에러 발생:', error);
+        console.error('error:', error);
+        if (error.response && error.response.status === 409) {
+          alert('Email already exists.');
+        } else {
+          console.error('error:', error);
+        }
       }
     } else {
-      alert('이용 약관에 동의해 주세요.');
+      alert('Please agree to the Terms of Use.');
     }
   };
   

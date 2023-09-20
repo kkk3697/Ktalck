@@ -12,6 +12,14 @@ module.exports = class Tutors extends Model {
         autoIncrement: true,
         allowNull: false
       },
+      writer: { // 작성자
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'User',  // 작성자는 User 모델을 참조
+          key: 'userId'
+        }
+      },
       userId: {  // 관련된 유저 아이디
         type: DataTypes.INTEGER,
         allowNull: false,

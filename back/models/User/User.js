@@ -11,8 +11,8 @@ module.exports = class User extends Model {
         uNo :{
           type: DataTypes.INTEGER,
           allowNull : false,
-          defaultValue: 1,
           primaryKey: true,
+          autoIncrement: true,
           unique : true,
         },
         email: {
@@ -68,32 +68,37 @@ module.exports = class User extends Model {
         modelName: 'User',
         tableName: 'User',
         hooks: {
-          beforeCreate: async (user, options) => {
-            const lastUser = await User.findOne({ order: [['uNo', 'DESC']] });
-            if (lastUser) {
-              user.uNo = lastUser.uNo + 1;
-            } else {
-              user.uNo = 1;
-            }
-            // 이 부분에서 레벨을 확인해서 Student 또는 Teacher 테이블에 데이터를 넣어줘
-            if (user.level === 1) {
-              await Student.create({
-                email: user.email,
-                // ... 다른 필드들
-              });
-            } else if (user.level === 2) {
-              await Teacher.create({
-                email: user.email,
-                // ... 다른 필드들
-              });
-            }
+        
+    afterCreate: async (user, options) => {
+    const transaction = await sequelize.transaction();
+    try {
+  
 
-          }
-        },
-        autoIncrement: false, 
-        timestamps: false,
-      });
+    
+      if (parseInt(user.level) === 1){
+        console.log("레벨 1이니 Student에 넣을게.");
+        await Student.create({
+          email: user.email,
+        }, { transaction });
+      } else if (parseInt(user.level) === 2) {
+        console.log("레벨 2이니 Teacher에 넣을게.");
+        await Teacher.create({
+          email: user.email,
+        }, { transaction });
+      }
+
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
     }
+  }
+},
+  autoIncrement: false, 
+  timestamps: false,
+  }
+  );
+}
   static associate(db) {
     db.User.hasOne(db.Student, {
       foreignKey: 'email',

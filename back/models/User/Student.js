@@ -31,7 +31,7 @@ module.exports = class Student extends Model {
           Nickname:             //별칭
           {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
           },
           stuLanguage: {                  //학생이 가능한 언어
             type: DataTypes.STRING(100),

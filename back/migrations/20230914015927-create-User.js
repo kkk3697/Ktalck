@@ -10,7 +10,8 @@ module.exports = {
       allowNull : false,
       unique : true,
       primaryKey: true,
-      defaultValue: 1,
+      autoIncrement : true,
+      
     },
     email: {
       type: Sequelize.STRING(100),
@@ -38,6 +39,10 @@ module.exports = {
     currentCity: {
       type: Sequelize.STRING(60),
       allowNull: false,
+    },
+    profileImage: {
+      type: Sequelize.STRING,
+      allowNull: true // 이미지는 선택적이니까 null 허용
     },
     full_phone_number: {
       type: Sequelize.STRING(30),
