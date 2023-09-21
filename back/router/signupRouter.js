@@ -3,6 +3,9 @@ const router = express.Router();
 const my_db = require('../config/config');
 const escapeHtml = require('escape-html');
 const { User, Student, Teacher } = require('../models');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 
 // 모듈 불러오기
 const { getCountryCodes } = require('../module/countryCode');
@@ -67,7 +70,7 @@ router.post('/signup', async (req, res) => {
     
     const userData = {
       email: escapeHtml(userbodyData.email),
-      password: password,
+      password: bcrypt.hashSync(password, saltRounds),
       username: username,
       birth: birth,
       language: userbodyData.language,

@@ -5,6 +5,9 @@ import Header from './pages/componetes/header';
 import Footer from './pages/componetes/footer';
 import MainPage from './pages/componetes/main';
 import SignupForm from './pages/componetes/signup';
+import AdminPage from './pages/componetes/mypage/Admin/Admin';
+import StudentPage from './pages/componetes/mypage/Student/Student';
+import TeacherPage from './pages/componetes/mypage/Teacher/Teacher';
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
         <Routes>
           <Route exact path="/" element={<MainPage />} />
           <Route path="/signup" element={<SignupForm />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/student" element={<StudentPage />} />
+          <Route path="/teacher" element={<TeacherPage />} />
         </Routes>
         <Footer />
       </Router>
