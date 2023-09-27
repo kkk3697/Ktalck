@@ -52,5 +52,12 @@ router.get('/check-session', (req, res) => {
       return res.json({ success: true, message: '로그아웃 성공' });
     });
   });
+  router.get('/checkLogin', (req, res) => {
+    if (req.session.user) {
+      return res.json({ isLoggedIn: true, username: req.session.user.username, userLevel: req.session.user.userLevel });
+    } else {
+      return res.json({ isLoggedIn: false });
+    }
+  });
 
 module.exports = router;

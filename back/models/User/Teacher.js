@@ -27,6 +27,22 @@ module.exports = class Teacher extends Model {
             type: DataTypes.STRING(50),
             allowNull: true,
           },
+          privatenumber : {               //주민 등록 번호
+            type : DataTypes.STRING(20),
+            allowNull : true,
+          },
+          gender: {
+            type: DataTypes.STRING(10),  // 성별
+            allowNull: true,
+          },
+          address: {
+            type: DataTypes.STRING(200),  // 주소
+            allowNull: true,
+          },
+          detailAddress: {
+            type: DataTypes.STRING(100),  // 상세 주소
+            allowNull: true,
+          },
           // 여기에 강사만의 필드를 추가
         },
         {

@@ -80,12 +80,8 @@ module.exports = class User extends Model {
         await Student.create({
           email: user.email,
         }, { transaction });
-      } else if (parseInt(user.level) === 2) {
-        console.log("레벨 2이니 Teacher에 넣을게.");
-        await Teacher.create({
-          email: user.email,
-        }, { transaction });
-      }
+      } 
+      
 
       await transaction.commit();
     } catch (error) {

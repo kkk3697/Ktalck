@@ -24,7 +24,23 @@ module.exports = {
       bankNo: {
         type: Sequelize.STRING(50),
         allowNull: true
-      }
+      },
+      privatenumber : {               //주민 등록 번호
+        type : Sequelize.STRING(20),
+        allowNull : true,
+      },
+      gender: {
+        type: Sequelize.STRING(10),  // 성별
+        allowNull: true,
+      },
+      address: {
+        type: Sequelize.STRING(200),  // 주소
+        allowNull: true,
+      },
+      detailAddress: {
+        type: Sequelize.STRING(100),  // 상세 주소
+        allowNull: true,
+      },
     }, {
       charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci',

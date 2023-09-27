@@ -10,6 +10,7 @@ import Select from 'react-select';
 const App = () => {
 const [searchTerm, setSearchTerm] = useState(""); 
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const [countryCodes, setCountryCodes] = useState([]);
 const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);//박스 상태 확인
 const [isCheckboxEnabled, setIsCheckboxEnabled] = useState(false);//체크 상태 확인
@@ -103,7 +104,7 @@ useEffect(() => {
   // 국가 코드를 불러오는 함수
   async function fetchCountryCodes() {
     try {
-      const response = await axios.get('http://localhost:4020/api/countryCodes');
+      const response = await axios.get(`${API_BASE_URL}/countryCodes`);
       const countryNames = response.data.map(item => item.name);
       setCountryCodes(response.data);
     } catch (error) {
@@ -112,7 +113,7 @@ useEffect(() => {
   }
   async function fetchTimezones() {
     try {
-      const response = await axios.get('http://localhost:4020/api/timezones');
+      const response = await axios.get(`${API_BASE_URL}/timezones`);
       setTimezones(response.data);
     } catch (error) {
       console.error("API 호출 중 에러 발생:", error);
@@ -220,7 +221,7 @@ const messageListener = (event) => {
   
       try {
         // 서버로 POST 요청
-        const response = await axios.post('http://localhost:4020/api/signup', newFormData);
+        const response = await axios.post(`${API_BASE_URL}/signup`, newFormData);
         if (response.status === 200) {
           console.log('Application submitted:', response.data);
           console.log(new FormData);

@@ -5,12 +5,15 @@ const session = require('express-session');
 const loginRouter = require('./router/loginRouter.js');
 const signupRouter = require('./router/signupRouter.js');
 
-const studentRouter = require('./router/mypage/StudentRouter');
-const teacherRouter = require('./router/mypage/TeacherRouter');
+const studentRouter = require('./router/mypage/StudentRouter.js');
+const teacherRouter = require('./router/mypage/TeacherRouter.js');
 const adminRouter = require('./router/mypage/AdminsRouter.js');
 
 // 기본 미들웨어 설정
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 app.use(express.json());
 
 // 세션 미들웨어 설정 (라우터 설정 이전에)
@@ -24,6 +27,9 @@ app.use(session({
 // 라우터 설정
 app.use('/api', signupRouter);
 app.use('/api', loginRouter);
+app.use('/api', studentRouter )
+app.use('/api', teacherRouter )
+app.use('/api', adminRouter )
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');

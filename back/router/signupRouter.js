@@ -52,32 +52,32 @@ router.post('/signup', async (req, res) => {
     }
     
     
-    const firstName = escapeHtml(userbodyData.firstName);
-    const lastName = escapeHtml(userbodyData.lastName);
+    const firstName = userbodyData.firstName;
+    const lastName = userbodyData.lastName;
     const username = `${firstName} ${lastName}`;
-    const password = escapeHtml(userbodyData.phone_number.slice(-4));
+    const password = userbodyData.phone_number.slice(-4);
     const full_phone_number = `${userbodyData.country_code}-${userbodyData.phone_number}`; 
 
-    const birthYear = escapeHtml(userbodyData.birthYear);
-    const birthMonth = escapeHtml(userbodyData.birthMonth);
-    const birthDay = escapeHtml(userbodyData.birthDay);
+    const birthYear = userbodyData.birthYear;
+    const birthMonth = userbodyData.birthMonth;
+    const birthDay = userbodyData.birthDay;
     const birth = `${birthYear}-${birthMonth}-${birthDay}`;
 
     const selectedTimezones = userbodyData.timezones || [];
     const timezoneString = selectedTimezones.join(',');  // 배열을 콤마로 구분된 문자열로 변환
 
-    const countryValue = escapeHtml(userbodyData.country.value);
+    const countryValue = userbodyData.country.value;
     
     const userData = {
-      email: escapeHtml(userbodyData.email),
+      email: userbodyData.email,
       password: bcrypt.hashSync(password, saltRounds),
       username: username,
       birth: birth,
       language: userbodyData.language,
       full_phone_number: full_phone_number,
-      currentCity: escapeHtml(userbodyData.currentCity),
+      currentCity: userbodyData.currentCity,
       timezone: timezoneString,
-      nationality: escapeHtml(userbodyData.nationality),
+      nationality: userbodyData.nationality,
       country: countryValue,
       level : userbodyData.level,
     };

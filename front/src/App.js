@@ -17,9 +17,9 @@ function App() {
         <Routes>
           <Route exact path="/" element={<MainPage />} />
           <Route path="/signup" element={<SignupForm />} />
-          <Route path="/admin" element={<AdminPage />} />
           <Route path="/student" element={<StudentPage />} />
-          <Route path="/teacher" element={<TeacherPage />} />
+          <Route path="/admin/*" element={<AdminPage />} />
+          <Route path="/teacher/*" element={<TeacherPage />} />
         </Routes>
         <Footer />
       </Router>
