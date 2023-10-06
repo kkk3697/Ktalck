@@ -1,3 +1,4 @@
+/* 기본 스타일 */
 .header {
   background-color: #e2e2e2;
   display: flex;
@@ -5,19 +6,49 @@
   align-items: center;
   padding: 10px;
 }
-
-.logo, .title, .nav-links, .login {
-  flex-grow: 1;
-  text-align: center;
+.menu-content {
+  display: none;
+  flex-direction: column;
+}
+.menu-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
+.logo-menu-container, .menu-container, .login.button-container {
+  display: flex;
+  align-items: center;
+}
+.logo, .common-menu-item {
+  flex-grow: 1;
+  text-align: center;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.login.button-container span {
+  margin-left: 50px;  /* 원하는 간격으로 조절 */
+}
+
+.admin-menu,
+.teacher-menu {
+  float: left; 
+
+}
 .logo::after {
   content: ' ktack';
+}
+
+.login {
+  text-align: right;
 }
 
 .login input {
   margin-right: 10px;
 }
+
+/* 버튼 스타일 */
 .button{
   margin-left : 10px;
   padding: 10px;
@@ -28,31 +59,75 @@
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-.button-container {
-  float: left;
+
+.admin-menu a:hover, .teacher-menu a:hover {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
 }
 
-.admin-menu a,
-.teacher-menu a {
+.admin-menu a:active, .teacher-menu a:active {
+  box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+}
+
+.admin-menu a, .teacher-menu a {
   display: inline-block;
   background-color: rgb(242, 247, 181);
   padding: 10px 20px;
   margin: 5px;
-  margin-left : 25px;
+  margin-left: 25px;
   border: 1px solid #ccc;
-  border-radius: 12px; 
+  border-radius: 12px;
   text-decoration: none;
   color: rgb(31, 18, 204);
 }
 
+.show {
+  display: block !important; /* 또는 inline-block */
+}
+.toggle-button {
+  display: none;
+}
+
 @media (max-width: 768px) {
+
   .header {
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
   }
+  .menu-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .menu-item {
+    margin-right: 10px;  /* 혹은 원하는 간격으로 */
+  }
+  .menu-content.menu-open {
+    display: flex;
+    color:red;
+  }
   .logo, .title, .nav-links, .login {
     text-align: left;
     margin-bottom: 10px;
+  }
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .admin-menu, .teacher-menu {
+    display: none;  /* 기본적으로 숨김 */
+  }
+  .toggle-button {
+    display: inline-block;
+  }
+ 
+}
+
+@media (min-width: 769px) {
+
+  .toggle-button {
+    display: none;  /* 토글 버튼 숨김 */
   }
 }

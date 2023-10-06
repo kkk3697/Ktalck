@@ -10,7 +10,7 @@ const TeacherManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState('');
   const [memberName, setMemberName] = useState('');
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState('남성');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
@@ -19,6 +19,7 @@ const TeacherManagement = () => {
   const [teachingLanguage, setTeachingLanguage] = useState('');
   const [bankName, setBankName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
+  
   
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -111,7 +112,7 @@ const TeacherManagement = () => {
                   <label className="col-sm-3 col-form-label">기본 주소</label>
                   <div className="col-sm-9">
                     <input
-                      style={{ width: '100%' }} // 너비를 100%로 설정
+                      style={{ width: '100%' }} 
                       value={address} 
                       onChange={e => setAddress(e.target.value)}
                       placeholder="주소"
@@ -122,7 +123,7 @@ const TeacherManagement = () => {
                   <label className="col-sm-3 col-form-label">상세 주소</label>
                   <div className="col-sm-9">
                     <input
-                      style={{ width: '100%' }} // 너비를 100%로 설정
+                      style={{ width: '100%' }} 
                       value={detailAddress}
                       onChange={e => setDetailAddress(e.target.value)}
                       placeholder="상세주소"

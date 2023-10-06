@@ -36,10 +36,8 @@ router.post('/TeacherCreate', async (req, res) => {
         gender,
         address,
         detailAddress,
-        registrationNumber: combinedRegistrationNumber,
-        teachingLanguage,
-        bankName,
-        accountNumber,
+        privatenumber: combinedRegistrationNumber,
+        teaLanguage: teachingLanguage,
         bankNo: combinedBankInfo  
       }, { transaction: t });
     }
