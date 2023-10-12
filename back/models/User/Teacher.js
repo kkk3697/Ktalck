@@ -43,7 +43,15 @@ module.exports = class Teacher extends Model {
             type: DataTypes.STRING(100),  // 상세 주소
             allowNull: true,
           },
-          // 여기에 강사만의 필드를 추가
+          status: {
+            type: DataTypes.ENUM('Working', 'OnLeave', 'retiring'),
+            allowNull: false,
+            defaultValue: 'Working'
+          },
+          zoomMeetingLink: {
+            type: DataTypes.STRING,
+            allowNull: true,
+          }
         },
         {
           modelName: "Teacher",

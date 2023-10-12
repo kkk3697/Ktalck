@@ -40,6 +40,15 @@ module.exports = {
       detailAddress: {
         type: Sequelize.STRING(100),  // 상세 주소
         allowNull: true,
+      }, 
+      zoomMeetingLink: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      status: {
+        type: Sequelize.ENUM('Working', 'OnLeave', 'retiring'),
+        allowNull: false,
+        defaultValue: 'Employed'
       },
     }, {
       charset: 'utf8mb4',

@@ -1,7 +1,8 @@
 'use strict';
 const STUDENT_STATES = {    
   PENDING: 0,       //가입 신청상태
-  AFTER_MEETING: 1, //줌 미팅 후 상태
+  AFTER_MEETING: 1, //줌 미팅 전 상태
+  BEFORE_MEETING: 2, //줌미팅 후 상태
   ACTIVE: 2,        //재학생
   GRADUATED: 3,     //졸업생
   PAUSED: 4         //휴학생

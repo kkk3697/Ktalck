@@ -11,7 +11,7 @@ module.exports = class StudentHistory extends Model {
         primaryKey: true,
         allowNull: false
       },
-      studentId: {  // 학생 아이디
+      StCID: {  // 학생 아이디
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {

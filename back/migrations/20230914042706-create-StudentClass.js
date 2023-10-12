@@ -47,6 +47,10 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull : false,
     },
+    zoomMeetingData: {
+      type: Sequelize.DATE,
+      allowNull: true,
+    }
     });
   },
   

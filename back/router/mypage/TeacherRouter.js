@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { sequelize, User, Teacher } = require('../../models');
 
+
 router.post('/TeacherCreate', async (req, res) => {
   const { email, memberName, phoneNumber, gender, address, detailAddress, registrationNumber, teachingLanguage, bankName, accountNumber } = req.body;
   
@@ -38,7 +39,7 @@ router.post('/TeacherCreate', async (req, res) => {
         detailAddress,
         privatenumber: combinedRegistrationNumber,
         teaLanguage: teachingLanguage,
-        bankNo: combinedBankInfo  
+        bankNo: combinedBankInfo  ,
       }, { transaction: t });
     }
 
@@ -54,5 +55,48 @@ router.post('/TeacherCreate', async (req, res) => {
     });
   }
 });
+
+router.get('/teacherLoad', async (req, res) => {
+  try {
+    const teachers = await Teacher.findAll({
+      attributes: ['tno','email', 'zoomMeetingLink'],  // 이메일과 줌 미팅 링크를 저장하는 필드
+      include: [{
+        model: User,
+        attributes: ['username'],
+        where: { level: 2 }
+      }]
+    });
+
+    const teacherData = teachers.map(teacher => ({
+      tno: teacher.tno,
+      username: teacher.User.username, // 유저 이름
+      zoomMeetingLink: teacher.zoomMeetingLink // 줌 미팅 링크
+    }));
+
+    res.status(200).json(teacherData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: '강사 데이터를 불러오는 데 실패했습니다.'
+    });
+  }
+});
+
+router.get('/getZoomMeetingLink/:tno', async (req, res) => {
+  const { tno } = req.params;
+
+  try {
+    const teacher = await Teacher.findOne({ where: { tno } });
+    if (!teacher) {
+      return res.status(404).json({ message: '강사를 찾을 수 없습니다.' });
+    }
+
+    res.status(200).json({ zoomMeetingLink: teacher.zoomMeetingLink });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Zoom 미팅 링크를 가져오는 데 실패했습니다.' });
+  }
+});
+
 
 module.exports = router;

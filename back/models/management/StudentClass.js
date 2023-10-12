@@ -14,14 +14,14 @@ module.exports = class StudentClass extends Model {
     autoIncrement: true,
     allowNull: false
   },
-  studentId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Student',  // 참조하는 테이블 이름
-        key: 'stuNo'       // 참조하는 테이블의 실제 컬럼 이름
-      }
-    },
+  stuNo: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Student',  // 참조하는 테이블 이름
+      key: 'stuNo'       // 참조하는 테이블의 실제 컬럼 이름
+    }
+  },
     cno: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -51,13 +51,25 @@ module.exports = class StudentClass extends Model {
     allowNull: true,
     defaultValue: 0  // 할인이 없을 경우 0으로 설정
   },
+  zoomMeetingData: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  }
 
 }, 
 {
-  sequelize,  // 데이터베이스 연결 인스턴스
-  modelName: 'StudentClass'
+    sequelize,
+    modelName: 'StudentClass',
+    tableName: 'studentclass'  // 실제 DB의 테이블 이름
+
 });
   }
-}
 
+static associate(db) {
+  db.StudentClass.belongsTo(db.Student, {
+    foreignKey: 'stuNo',
+    targetKey: 'stuNo'
+  });
+}
+}
 

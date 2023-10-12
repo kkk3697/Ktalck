@@ -77,7 +77,7 @@ router.post('/signup', async (req, res) => {
       full_phone_number: full_phone_number,
       currentCity: userbodyData.currentCity,
       timezone: timezoneString,
-      nationality: userbodyData.nationality,
+      Nationality: userbodyData.nationality,
       country: countryValue,
       level : userbodyData.level,
     };

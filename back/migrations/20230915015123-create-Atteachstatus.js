@@ -16,7 +16,7 @@ module.exports = {
           key: 'cno'
         }
       },
-      StudentId: {  // 학생 아이디
+      StCID: {  // 학생 아이디
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

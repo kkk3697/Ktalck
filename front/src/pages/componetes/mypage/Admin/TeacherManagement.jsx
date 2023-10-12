@@ -170,9 +170,7 @@ const TeacherManagement = () => {
     </div>
   </div>
 )}
-
-                      
-        <table className="table">
+  <table className="table">
           <thead>
             <tr>
               <th>강사번호</th>
