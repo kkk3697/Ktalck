@@ -47,10 +47,18 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull : false,
     },
-    zoomMeetingData: {
+    zoomMeetingData: {      //Zoom 미팅 예정 일시
       type: Sequelize.DATE,
       allowNull: true,
-    }
+    },  
+    zoomMeetingTeacher: {  // Zoom 미팅 강사 (고정)
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    scheduledLevel: {  // 예정 레벨 (고정)
+      type: Sequelize.STRING,
+      allowNull: true
+    },
     });
   },
   
