@@ -16,6 +16,53 @@ const StudentManagement = () => {
   const [selectedStatus, setSelectedStatus] = useState(0); // 추가된 상태변수
   const [showModal, setShowModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [childData, setChildData] = useState(null);
+
+  const [pendingData, setPendingData] = useState({
+    timeDifference: 0,
+    meetingDate: null,
+    zoomMeetingTeacher: null,
+    selectedZoomLink: null
+  });
+
+  const [modalData, setModalData] = useState({
+    pending: null,
+    zoomRegistered: null,
+    zoomCompleted: null,
+    currentStudent: null,
+    absenceStudent: null
+  });
+
+  const handleSaveData = async (newData, type) => {
+    // 먼저 로컬 상태 업데이트
+    setModalData({
+      ...modalData,
+      [type]: newData
+    });
+  
+    // 여기서 pendingData도 업데이트
+    setPendingData({
+      ...pendingData,
+    });
+  
+    // 서버로 데이터 전송
+    try {
+      const response = await axios.post(`${API_BASE_URL}/saveModalData`, {
+        stuNo: selectedStudent.stuNo,
+        ...modalData,
+        [type]: newData,
+        pendingData // 이렇게 pendingData도 같이 보내
+      });
+      if (response.status === 200 || response.status === 204) {
+        // 성공적으로 데이터가 저장됐을 때의 로직
+        console.log("데이터 저장 성공:", response.data);
+      }
+    } catch (error) {
+      // 에러 발생 시 처리
+      console.error("데이터 저장 실패:", error);
+    }
+  };
+  
 
   const handleShowModal = (student) => {
     setSelectedStudent(student);
@@ -103,13 +150,14 @@ const StudentManagement = () => {
                   <button type="button" className="btn-close" onClick={handleCloseModal}></button>
                 </div>
               <div className="modal-body">
-              {selectedStudent.StudentState === 0 && <PendingModalBody  selectedStudent={selectedStudent}/>}
-              {selectedStudent.StudentState === 1 && <ZoomRegisteredModalBody  selectedStudent={selectedStudent} />}
-              {selectedStudent.StudentState === 2 && <ZoomCompletedModalBody  selectedStudent={selectedStudent}/>}
-              {selectedStudent.StudentState === 3 && <CurrentStudentBody  selectedStudent={selectedStudent}/>}
-              {selectedStudent.StudentState === 4 && <AbsenceStudentBody  selectedStudent={selectedStudent}/>}
+              {selectedStudent.StudentState === 0 && <PendingModalBody setPendingData={setPendingData} selectedStudent={selectedStudent} />}
+              {selectedStudent.StudentState === 1 && <ZoomRegisteredModalBody setChildData={setChildData} selectedStudent={selectedStudent} />}
+              {selectedStudent.StudentState === 2 && <ZoomCompletedModalBody setChildData={setChildData} selectedStudent={selectedStudent} />}
+              {selectedStudent.StudentState === 3 && <CurrentStudentBody setChildData={setChildData} selectedStudent={selectedStudent} />}
+              {selectedStudent.StudentState === 4 && <AbsenceStudentBody setChildData={setChildData} selectedStudent={selectedStudent} />}
               </div>
               <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={() => handleSaveData(childData, selectedStudent.StudentState)} >저장</button>
               <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>닫기</button>
             </div>
             </div> 

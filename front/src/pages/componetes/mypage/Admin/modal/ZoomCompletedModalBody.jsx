@@ -11,6 +11,7 @@ const ZoomCompletedModalBody = ({selectedStudent}) => {
     const [Nickname  , setNickname ] = useState("");
     const [teacher, setTeacher] = useState("");
     const [TimeDifference ,setTimeDifference ] = useState(0);
+    const [MeetingDate, setMeetingDate ] = useState();
     const [selectedZoomLink, setSelectedZoomLink] = useState();
     const [teachers, setTeachers] = useState([]);
 

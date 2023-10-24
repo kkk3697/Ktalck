@@ -1,6 +1,5 @@
 //StudentManagement 0번 모듈 내용
 
-
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
@@ -8,14 +7,42 @@ import { Link } from 'react-router-dom';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const PendingModalBody = ({ selectedStudent}) => {
+
+ 
+const PendingModalBody = ({ selectedStudent, setPendingData }) => {
 
   const [Nickname  , setNickname ] = useState("");
   const [teacher, setTeacher] = useState("");
   const [TimeDifference ,setTimeDifference ] = useState(0);
   const [selectedZoomLink, setSelectedZoomLink] = useState();
-
+  const [MeetingDate, setMeetingDate ] = useState();
   const [teachers, setTeachers] = useState([]);  
+
+  const handleTimeDifferenceChange = (e) => {
+    const newTimeDifference = e.target.value;
+    setTimeDifference(newTimeDifference);
+  };
+    
+  const handleMeetingDateChange = (e) => {
+    const newMeetingDate = e.target.value;
+    setMeetingDate(newMeetingDate);
+  };
+    
+  const handleTeacherChange = (newTeacher) => {
+    setTeacher(newTeacher);
+  };
+  
+  const updatePendingData = () => {
+
+    const 만든데이터 = {
+      timeDifference: TimeDifference,
+      meetingDate: MeetingDate,
+      teacher: teacher,
+      selectedZoomLink: selectedZoomLink
+    };
+    setPendingData(만든데이터);
+  };
+  
 
   const updateZoomLink = async (tno) => {
     try {
@@ -35,9 +62,9 @@ const PendingModalBody = ({ selectedStudent}) => {
       .catch(error => {
         console.error('강사 데이터를 불러오는 데 실패했습니다', error);
       });
-  }, []);
-
-
+      updatePendingData();
+    }, [TimeDifference, MeetingDate, teacher, selectedZoomLink]);
+    
   return (
     <div>
    <div className="modal-body">

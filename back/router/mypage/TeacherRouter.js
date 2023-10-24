@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { sequelize, User, Teacher } = require('../../models');
+const { sequelize, User, Teacher ,TeacherClass } = require('../../models');
 
 
 router.post('/TeacherCreate', async (req, res) => {
@@ -32,7 +32,7 @@ router.post('/TeacherCreate', async (req, res) => {
 
       const combinedBankInfo = `${bankName} : ${accountNumber}`;
 
-      await Teacher.create({
+      const newTeacher = await Teacher.create({
         email,
         gender,
         address,
@@ -40,7 +40,13 @@ router.post('/TeacherCreate', async (req, res) => {
         privatenumber: combinedRegistrationNumber,
         teaLanguage: teachingLanguage,
         bankNo: combinedBankInfo  ,
+        zoomMeetingLink,
       }, { transaction: t });
+
+      await TeacherClass.create({
+        teacherId: newTeacher.tno, 
+        
+      }, { transaction: t });   
     }
 
     await t.commit();

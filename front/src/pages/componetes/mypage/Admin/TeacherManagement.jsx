@@ -19,6 +19,7 @@ const TeacherManagement = () => {
   const [teachingLanguage, setTeachingLanguage] = useState('');
   const [bankName, setBankName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
+  const [zoomMeetingLink ,setZoomMeetingLing] = useState('');
   
   
   const toggleModal = () => {
@@ -40,6 +41,7 @@ const TeacherManagement = () => {
         teachingLanguage,
         bankName,
         accountNumber,
+        zoomMeetingLink,
       };
   
       const response = await axios.post(`${API_BASE_URL}/TeacherCreate`, JSON.stringify(formData), {
@@ -161,6 +163,13 @@ const TeacherManagement = () => {
               <input type="text" placeholder="계좌 번호" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} className="form-control" />
             </div>
           </div>
+          <div className="row mb-3">
+            <label className="col-sm-3 col-form-label">줌 미팅 링크</label>
+            <div className="col-sm-4">
+              <input type="text" placeholder="" value={zoomMeetingLink} onChange={(e) => setZoomMeetingLing(e.target.value)} className="form-control" />
+            </div>
+        </div>
+          
         </div>
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary" onClick={toggleModal}>닫기</button>
@@ -184,7 +193,7 @@ const TeacherManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {/* 여기에 강사 정보를 루프로 돌려서 넣으면 돼 */}
+            
           </tbody>
         </table>
         <button className="btn btn-info">더 보기</button>

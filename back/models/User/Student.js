@@ -1,6 +1,7 @@
 'use strict';
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db');
+const StudentClass = require('../management/StudentClass');
 
 const STUDENT_STATES = {    
   PENDING: 0,       //가입 신청상태
@@ -47,6 +48,8 @@ module.exports = class Student extends Model {
             allowNull: false,
             defaultValue: STUDENT_STATES.PENDING,
           },
+
+          
         },
         {
           modelName: "Student",
@@ -55,11 +58,12 @@ module.exports = class Student extends Model {
           collate: "utf8mb4_general_ci",
           sequelize,
           timestamps: true,
-
+          
           
         }
       );
     }
+
     static associate(db) {
       db.Student.belongsTo(db.User, {
         foreignKey: 'email',
@@ -71,4 +75,4 @@ module.exports = class Student extends Model {
         sourceKey: 'stuNo'
       });
     }
-  };
+};

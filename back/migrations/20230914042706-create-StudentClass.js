@@ -7,7 +7,8 @@ module.exports = {
       StCID: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        defaultValue : 0,
       },
       stuNo: {
         type: Sequelize.INTEGER,
@@ -23,7 +24,8 @@ module.exports = {
         references: {
           model: 'ClassRoom',
           key: 'cno'
-        }
+        },
+        allowNull: true,
       },
       couponCode: {   // 쿠폰 코드
         type: Sequelize.STRING,
@@ -40,12 +42,12 @@ module.exports = {
       allowNull: true,
     },
     weeklyPrice: {          //주간가격
-      type: Sequelize.INTEGER,
-      allowNull: false,
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     weeklynumber :{         //주당 횟수
-      type: Sequelize.INTEGER,
-      allowNull : false,
+      type: DataTypes.INTEGER,
+      allowNull : true,
     },
     zoomMeetingData: {      //Zoom 미팅 예정 일시
       type: Sequelize.DATE,
@@ -57,6 +59,14 @@ module.exports = {
     },
     scheduledLevel: {  // 예정 레벨 (고정)
       type: Sequelize.STRING,
+      allowNull: true
+    },
+    zoomMeetingLink: { //줌미팅 링크
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    timeDifference: { //시간 시차
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     });

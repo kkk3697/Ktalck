@@ -1,7 +1,7 @@
 'use strict';
 //학생 중간 테이블
 
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, STRING } = require('sequelize');
 const sequelize = require('../db');
 
 
@@ -12,7 +12,8 @@ module.exports = class StudentClass extends Model {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    allowNull: false
+    allowNull: false,
+    defaultValue : 0,
   },
   stuNo: {
     type: DataTypes.INTEGER,
@@ -22,25 +23,25 @@ module.exports = class StudentClass extends Model {
       key: 'stuNo'       // 참조하는 테이블의 실제 컬럼 이름
     }
   },
-    cno: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'ClassRoom',
-        key: 'cno'
-      }
+  cno: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'ClassRoom',
+      key: 'cno'
     },
+    allowNull : true, // 또는 false로 선택해야 해.
+  },
   attendance: {            //출석 정보
     type: DataTypes.JSON, // 출석 정보는 JSON 형태로
     allowNull: true,
   },
   weeklyPrice: {          //주간가격
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   weeklynumber :{         //주당 횟수
     type: DataTypes.INTEGER,
-    allowNull : false,
+    allowNull : true,
   },
   couponCode: {   // 쿠폰 코드
     type: DataTypes.STRING,
@@ -51,16 +52,34 @@ module.exports = class StudentClass extends Model {
     allowNull: true,
     defaultValue: 0  // 할인이 없을 경우 0으로 설정
   },
-  zoomMeetingData: {
+  zoomMeetingData: {    //줌미팅 일자
     type: DataTypes.DATE,
     allowNull: true,
   }
-
+,
+  zoomMeetingTeacher: {  // Zoom 미팅 강사 (고정)
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  scheduledLevel: {  // 예정 레벨 (고정)
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  zoomMeetingLink: { //줌미팅 링크
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  timeDifference: { //시간 시차
+    type: DataTypes.INTEGER,
+    allowNull: true
+  }
+  ,
 }, 
 {
     sequelize,
     modelName: 'StudentClass',
     tableName: 'studentclass'  // 실제 DB의 테이블 이름
+    , timestamps: false 
 
 });
   }

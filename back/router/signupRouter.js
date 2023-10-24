@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const my_db = require('../config/config');
-const escapeHtml = require('escape-html');
-const { User, Student, Teacher } = require('../models');
+const { User, Student, Teacher,StudentClass } = require('../models');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
 
 
 // 모듈 불러오기
@@ -21,6 +21,8 @@ router.get('/timezones', (req, res) => {
   const timezones = getTimezones();
   res.json(timezones);
 });
+
+
 const createUserAndEntity = async (userData) => {
   let user;
   try {
@@ -30,7 +32,9 @@ const createUserAndEntity = async (userData) => {
     // User 레벨 확인
     if (user.level === 'student') {
       // Student 정보 생성
-      await Student.create({ /* 여기서는 user.id와 다른 정보를 사용해서 Student를 생성 */ });
+      await Student.create({ });
+      await StudentClass.create({ });
+
     } else if (user.level === 'teacher') {
       // Teacher 정보 생성
       await Teacher.create({ /* 여기서는 user.id와 다른 정보를 사용해서 Teacher를 생성 */ });

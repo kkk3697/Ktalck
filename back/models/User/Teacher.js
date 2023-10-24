@@ -1,6 +1,7 @@
 'use strict';
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db');
+const TeacherClass = require('../management/TeacherClass');
 
 module.exports = class Teacher extends Model {
     static init(sequelize) {
@@ -59,8 +60,8 @@ module.exports = class Teacher extends Model {
           charset: "utf8mb4",
           collate: "utf8mb4_general_ci",
           sequelize,
-          timestamps: true
-
+          timestamps: true,
+        
         }
       );
     }
@@ -69,6 +70,12 @@ module.exports = class Teacher extends Model {
         foreignKey: 'email',
         targetKey: 'email'
       });
+      
+      db.Teacher.hasMany(db.TeacherClass, {
+        foreignKey: 'teacherId',
+        sourceKey: 'tno'
+      });
     }
+    
   };
   

@@ -10,7 +10,9 @@ module.exports = class TeacherClass extends Model {
     thCID: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false
+      autoIncrement: true,
+      allowNull: false,
+      defaultValue : 0,
     },  
   
     teacherId: {
@@ -23,7 +25,7 @@ module.exports = class TeacherClass extends Model {
   },
   cno: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: 'ClassRoom',
       key: 'cno'
@@ -38,9 +40,17 @@ module.exports = class TeacherClass extends Model {
     allowNull: true,
   },
 }, {
-    sequelize,  
-    modelName: 'TeacherClass'
+  sequelize,  
+  modelName: 'TeacherClass',
+  tableName: 'teacherclass',
+  timestamps: false
 });
+  }
+  static associate(db) {
+    db.TeacherClass.belongsTo(db.Teacher, {
+      foreignKey: 'teacherId',
+      targetKey: 'tno'
+    });
   }
 }
 

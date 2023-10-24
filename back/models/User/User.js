@@ -1,6 +1,7 @@
 'use strict';
 const Student = require('./Student');
 const Teacher = require('./Teacher');
+const StudentClass = require('../management/StudentClass');
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
@@ -69,27 +70,28 @@ module.exports = class User extends Model {
         tableName: 'User',
         hooks: {
         
-    afterCreate: async (user, options) => {
-    const transaction = await sequelize.transaction();
-    try {
-  
-
-    
-      if (parseInt(user.level) === 1){
-        console.log("레벨 1이니 Student에 넣을게.");
-        await Student.create({
-          email: user.email,
-        }, { transaction });
-      } 
-      
-
-      await transaction.commit();
-    } catch (error) {
-      await transaction.rollback();
-      throw error;
-    }
-  }
-},
+          afterCreate: async (user, options) => {
+            const transaction = await sequelize.transaction();
+            try {
+          
+              if (parseInt(user.level) === 1){
+                console.log("레벨 1이니 Student에 넣을게.");
+                const newStudent = await Student.create({
+                  email: user.email,
+                }, { transaction });
+          
+                await StudentClass.create({
+                  stuNo: newStudent.stuNo,
+                }, { transaction });
+              } 
+          
+              await transaction.commit();
+            } catch (error) {
+              await transaction.rollback();
+              throw error;
+            }
+          },
+        },
   autoIncrement: false, 
   timestamps: false,
   }

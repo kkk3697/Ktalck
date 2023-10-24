@@ -8,6 +8,7 @@ const signupRouter = require('./router/signupRouter.js');
 const studentRouter = require('./router/mypage/StudentRouter.js');
 const teacherRouter = require('./router/mypage/TeacherRouter.js');
 const adminRouter = require('./router/mypage/AdminsRouter.js');
+const studentClassRouter = require('./router/subClass/StudentClassRouter.js');
 
 // 기본 미들웨어 설정
 app.use(cors({
@@ -27,17 +28,10 @@ app.use(session({
 // 라우터 설정
 app.use('/api', signupRouter);
 app.use('/api', loginRouter);
-app.use('/api', studentRouter )
-app.use('/api', teacherRouter )
-app.use('/api', adminRouter )
-
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
-
-app.get('/test', (req, res) => {
-  res.json({ message: "성공적으로 연결됨!" });
-});
+app.use('/api', studentRouter );
+app.use('/api', teacherRouter );
+app.use('/api', adminRouter );
+app.use('/api',studentClassRouter);
 
 app.listen(4020, () => {
   console.log('Server running on http://localhost:4020');
