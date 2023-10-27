@@ -23,12 +23,12 @@ module.exports = class TeacherClass extends Model {
       key: 'tno'
     }
   },
-  cno: {
+  classno: {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
       model: 'ClassRoom',
-      key: 'cno'
+      key: 'classno'
     }
   },
   lectureNotes: {               //강의 일지

@@ -5,7 +5,8 @@ const { sequelize, User, Teacher ,TeacherClass } = require('../../models');
 
 
 router.post('/TeacherCreate', async (req, res) => {
-  const { email, memberName, phoneNumber, gender, address, detailAddress, registrationNumber, teachingLanguage, bankName, accountNumber } = req.body;
+  const { email, memberName, phoneNumber, gender, address, detailAddress, registrationNumber, teachingLanguage, bankName, accountNumber, zoomMeetingLink } = req.body;
+
   
   const t = await sequelize.transaction();
   const [registrationNumberFront, registrationNumberBack] = registrationNumber.split('-');
@@ -40,12 +41,12 @@ router.post('/TeacherCreate', async (req, res) => {
         privatenumber: combinedRegistrationNumber,
         teaLanguage: teachingLanguage,
         bankNo: combinedBankInfo  ,
-        zoomMeetingLink,
+        
       }, { transaction: t });
 
       await TeacherClass.create({
         teacherId: newTeacher.tno, 
-        
+        zoomMeetingLink,
       }, { transaction: t });   
     }
 

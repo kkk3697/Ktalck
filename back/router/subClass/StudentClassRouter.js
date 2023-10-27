@@ -11,7 +11,12 @@ router.post('/saveModalData', async (req, res) => {
             if (pendingData) {
             ({ timeDifference, meetingDate, teacher, selectedZoomLink } = pendingData);
             }
-        const existingStudentClass = await StudentClass.findOne({
+            const existingStudent = await Student.findOne({
+                where: {
+                  stuNo: stuNo
+                }
+              });
+            const existingStudentClass = await StudentClass.findOne({
             where: {
                 stuNo: stuNo
             }
@@ -25,6 +30,9 @@ router.post('/saveModalData', async (req, res) => {
                 updateData.zoomMeetingData = meetingDate;
                 updateData.zoomMeetingTeacher = teacher;
                 updateData.zoomMeetingLink = selectedZoomLink;
+
+                await existingStudent.update({ StudentState: '1' });
+
             } else {
                 // pendingData가 없는 경우에는 다른 로직을 넣거나,
                 // 필요한 정보만 updateData에 추가

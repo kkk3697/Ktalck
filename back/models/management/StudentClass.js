@@ -23,11 +23,11 @@ module.exports = class StudentClass extends Model {
       key: 'stuNo'       // 참조하는 테이블의 실제 컬럼 이름
     }
   },
-  cno: {
+  classno: {
     type: DataTypes.INTEGER,
     references: {
       model: 'ClassRoom',
-      key: 'cno'
+      key: 'classno'
     },
     allowNull : true, // 또는 false로 선택해야 해.
   },

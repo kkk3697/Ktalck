@@ -48,7 +48,7 @@ module.exports = {
       status: {
         type: Sequelize.ENUM('Working', 'OnLeave', 'retiring'),
         allowNull: false,
-        defaultValue: 'Employed'
+        defaultValue: 'Working'
       },
     }, {
       charset: 'utf8mb4',

@@ -15,12 +15,12 @@ module.exports = class LectureHours extends Model {
     autoIncrement: true
   },
   // 해당 강의 시수의 클래스 번호, ClassRoom 테이블과 연결
-  cno: {
+  classno: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: 'ClassRoom',
-      key: 'cno'
+      key: 'classno'
     }
   },
   // 해당 강의 시수의 선생님 번호, Teacher 테이블과 연결

@@ -3,7 +3,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('ClassRoom', {
-      cno: {  // 클래스 고유 번호
+      classno: {  // 클래스 고유 번호
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
@@ -52,7 +52,21 @@ module.exports = {
       zoomPassword: {  // 줌 미팅 패스워드
         type: Sequelize.STRING,
         allowNull: true
-      }
+      },
+      weeklyFrequency: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      scheduleDays: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      classStatus: {
+        type: Sequelize.ENUM('ALL', 'ONGOING', 'ENDED'),
+        defaultValue: 'ALL',
+        allowNull: false,
+      },
+
     });
   },
 

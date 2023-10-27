@@ -36,12 +36,12 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      cno: {
+      classno: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'ClassRoom',
-          key: 'cno',
+          key: 'classno',
         },
       },
       Paymentfrequency :          //결제빈도

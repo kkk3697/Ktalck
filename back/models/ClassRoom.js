@@ -1,5 +1,3 @@
-
-//반 테이블
 'use strict';
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('./db');
@@ -7,63 +5,83 @@ const sequelize = require('./db');
 module.exports = class ClassRoom extends Model {
   static init(sequelize) {
     return super.init(
-    {
-  cno: {  // 클래스 고유 번호
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  className: {  // 클래스 이름
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  BoardId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: 'Board', // Board 모델을 참조
-      key: 'boardId' // Board 모델의 boardId를 참조
-    }
+      {
+        classno: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true
+        },
+        className: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
+        BoardId: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'Board',
+            key: 'boardId'
+          }
+        },
+        classStatus: {
+          type: DataTypes.ENUM('ALL', 'ONGOING', 'ENDED'),
+          defaultValue: 'ALL',
+          allowNull: false
+        },
+        classLevel: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        classCategory: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        startDate: {
+          type: DataTypes.DATE,
+          allowNull: false
+        },
+        endDate: {
+          type: DataTypes.DATE,
+          allowNull: false
+        },
+        classTime: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
+        weeklyFrequency: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
+        scheduleDays: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        zoomURL: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        zoomID: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        zoomPassword: {
+          type: DataTypes.STRING,
+          allowNull: true
+        }
+      },
+      {
+        modelName: "ClassRoom",
+        tableName: "ClassRoom",
+        charset: "utf8mb4",
+        collate: "utf8mb4_general_ci",
+        sequelize,
+        timestamps: true,
+      }
+    );
   }
- ,  
-  classLevel: {  // 클래스 수준(초급, 중급, 고급 등)
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  classCategory: {  // 클래스 카테고리(예: 수학, 과학 등)
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  startDate: {  // 클래스 시작 날짜
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  endDate: {  // 클래스 종료 날짜
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  classTime: {  // 수업 시간
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  zoomURL: {  // 줌 미팅 URL
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  zoomID: {  // 줌 미팅 ID
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  zoomPassword: {  // 줌 미팅 패스워드
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-}, {
-  sequelize,
-  modelName: 'ClassRoom',
-  timestamps: true,
-});
-  }
-}
 
+  static associate(db) {
+  
+  }
+};

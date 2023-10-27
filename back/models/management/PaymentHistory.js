@@ -39,12 +39,12 @@ module.exports = class PaymentHistory extends Model {
         type: DataTypes.DATE,
         allowNull: false
       },
-      cno: {
+      classno: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
           model: 'ClassRoom', // 참조하는 테이블 이름
-          key: 'cno'  // 참조하는 테이블의 실제 컬럼 이름
+          key: 'classno'  // 참조하는 테이블의 실제 컬럼 이름
         }
       },
       Paymentfrequency :          //결제빈도

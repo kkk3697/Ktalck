@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-        defaultValue : 0,
+        
       },  
     
       teacherId: {
@@ -20,12 +20,12 @@ module.exports = {
         key: 'tno'
       }
     },
-    cno: {
+    classno: {
       type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'ClassRoom',
-        key: 'cno'
+        key: 'classno'
       }
     },
     lectureNotes: {               //강의 일지

@@ -9,6 +9,7 @@ const studentRouter = require('./router/mypage/StudentRouter.js');
 const teacherRouter = require('./router/mypage/TeacherRouter.js');
 const adminRouter = require('./router/mypage/AdminsRouter.js');
 const studentClassRouter = require('./router/subClass/StudentClassRouter.js');
+const classroomRouter = require('./router/subClass/ClassRoomRouters.js');
 
 // 기본 미들웨어 설정
 app.use(cors({
@@ -32,6 +33,7 @@ app.use('/api', studentRouter );
 app.use('/api', teacherRouter );
 app.use('/api', adminRouter );
 app.use('/api',studentClassRouter);
+app.use('/api',classroomRouter);
 
 app.listen(4020, () => {
   console.log('Server running on http://localhost:4020');

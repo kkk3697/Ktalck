@@ -7,12 +7,12 @@ const sequelize = require('../db');
 module.exports = class Attendance extends Model {
   static init(sequelize) {
   return super.init({
-  cno: {
+    classno: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: 'ClassRoom',
-      key: 'cno'
+      key: 'classno'
     }
   },
   StudentId: {

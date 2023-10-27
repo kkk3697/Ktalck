@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
-        defaultValue : 0,
+        autoIncrement: true,
       },
       stuNo: {
         type: Sequelize.INTEGER,
@@ -18,12 +18,12 @@ module.exports = {
           key: 'stuNo'       // 참조하는 테이블의 실제 컬럼 이름
         }
       },
-      cno: {
+      classno: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'ClassRoom',
-          key: 'cno'
+          key: 'classno'
         },
         allowNull: true,
       },
@@ -42,11 +42,11 @@ module.exports = {
       allowNull: true,
     },
     weeklyPrice: {          //주간가격
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
     },
     weeklynumber :{         //주당 횟수
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull : true,
     },
     zoomMeetingData: {      //Zoom 미팅 예정 일시

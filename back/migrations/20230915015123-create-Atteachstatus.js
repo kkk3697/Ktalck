@@ -8,12 +8,12 @@ module.exports = {
         primaryKey: true,
         allowNull: false
       },
-      cno: {
+      classno: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'ClassRoom',
-          key: 'cno'
+          key: 'classno'
         }
       },
       StCID: {  // 학생 아이디
