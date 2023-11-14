@@ -41,6 +41,7 @@ router.post('/TeacherCreate', async (req, res) => {
         privatenumber: combinedRegistrationNumber,
         teaLanguage: teachingLanguage,
         bankNo: combinedBankInfo  ,
+        zoomMeetingLink,
         
       }, { transaction: t });
 
@@ -88,6 +89,37 @@ router.get('/teacherLoad', async (req, res) => {
     });
   }
 });
+// router.get('/teacherClassLoad', async (req, res) => {
+//   try {
+//     const teacherClasses = await TeacherClass.findAll({
+//       attributes: ['cno', 'tno'], // cno와 tno를 저장하는 필드
+//       include: [
+//         {
+//           model: Teacher,
+//           attributes: ['teacherName'], // 선생님 이름을 저장하는 필드
+//         },
+//         {
+//           model: ClassRoom,
+//           attributes: ['className'], // 클래스 이름을 저장하는 필드
+//         }
+//       ]
+//     });
+
+//     const teacherClassData = teacherClasses.map(teacherClass => ({
+//       cno: teacherClass.cno,
+//       tno: teacherClass.tno,
+//       teacherName: teacherClass.Teacher.teacherName, // 선생님 이름
+//       className: teacherClass.Class.className, // 클래스 이름
+//     }));
+
+//     res.status(200).json(teacherClassData);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       message: 'teacherClass 데이터를 불러오는 데 실패했습니다.'
+//     });
+//   }
+// });
 
 router.get('/getZoomMeetingLink/:tno', async (req, res) => {
   const { tno } = req.params;

@@ -66,7 +66,10 @@ module.exports = {
         defaultValue: 'ALL',
         allowNull: false,
       },
-
+      textbook: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
     });
   },
 

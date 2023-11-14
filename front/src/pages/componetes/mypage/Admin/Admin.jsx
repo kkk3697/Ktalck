@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import ClassManagement from './ClassManagement';
-import StudentManagement from './StudentManagement';
+import ClassManagement from './ClassManagement/ClassManagement';
+import StudentManagement from './StudentManagme/StudentManagement';
 import PaymentManagement from './PaymentManagement';
 import TeacherManagement from './TeacherManagement';
 import BoardManagement from './BoardManagement';

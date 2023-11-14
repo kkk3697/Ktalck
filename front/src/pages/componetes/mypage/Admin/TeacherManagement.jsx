@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect   } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
@@ -19,14 +19,25 @@ const TeacherManagement = () => {
   const [teachingLanguage, setTeachingLanguage] = useState('');
   const [bankName, setBankName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
-  const [zoomMeetingLink ,setZoomMeetingLing] = useState('');
-  
+  const [zoomMeetingLink, setZoomMeetingLink] = useState('');
+  const [teacher, setTeachers] = useState([]);
   
   const toggleModal = () => {
     setShowModal(!showModal);
   };
   
-  
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/teacherLoad`); // API 주소는 예시니까 실제에 맞게 수정해
+        setTeachers(response.data);
+      } catch (error) {
+        console.error('강사 정보 로딩에 실패했어.', error);
+      }
+    };
+
+    fetchTeachers();
+  }, []); // 빈 dependency array를 넣어서 컴포넌트가 마운트 될 때만 실행되도록 함
   const handleSubmit = async () => {
   const combinedRegistrationNumber = `${registrationNumberFront}-${registrationNumberBack}`;
     try {
@@ -166,7 +177,7 @@ const TeacherManagement = () => {
           <div className="row mb-3">
             <label className="col-sm-3 col-form-label">줌 미팅 링크</label>
             <div className="col-sm-4">
-              <input type="text" placeholder="" value={zoomMeetingLink} onChange={(e) => setZoomMeetingLing(e.target.value)} className="form-control" />
+              <input type="text" placeholder="" value={zoomMeetingLink} onChange={(e) => setZoomMeetingLink(e.target.value)} className="form-control" />
             </div>
         </div>
           
@@ -193,7 +204,13 @@ const TeacherManagement = () => {
             </tr>
           </thead>
           <tbody>
-            
+          {teacher.map((singleTeacher, index) => (
+              <tr key={index}>
+                <td>{singleTeacher.id}</td>
+                <td>{singleTeacher.name}</td>
+                <td>{singleTeacher.email}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <button className="btn btn-info">더 보기</button>

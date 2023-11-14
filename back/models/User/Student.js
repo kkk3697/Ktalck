@@ -48,7 +48,16 @@ module.exports = class Student extends Model {
             allowNull: false,
             defaultValue: STUDENT_STATES.PENDING,
           },
-
+          createdAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: DataTypes.NOW,
+        },  
           
         },
         {

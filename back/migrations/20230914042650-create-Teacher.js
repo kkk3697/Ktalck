@@ -50,6 +50,16 @@ module.exports = {
         allowNull: false,
         defaultValue: 'Working'
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
     }, {
       charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci',

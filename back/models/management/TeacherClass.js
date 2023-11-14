@@ -51,6 +51,11 @@ module.exports = class TeacherClass extends Model {
       foreignKey: 'teacherId',
       targetKey: 'tno'
     });
+
+    db.ClassRoom.hasOne(db.TeacherClass, {
+      foreignKey: 'classno',
+      sourceKey: 'classno'
+    });
   }
 }
 

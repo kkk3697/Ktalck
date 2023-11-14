@@ -43,7 +43,7 @@ module.exports = class ClassRoom extends Model {
         },
         endDate: {
           type: DataTypes.DATE,
-          allowNull: false
+          allowNull: true
         },
         classTime: {
           type: DataTypes.STRING,
@@ -68,7 +68,11 @@ module.exports = class ClassRoom extends Model {
         zoomPassword: {
           type: DataTypes.STRING,
           allowNull: true
-        }
+        },
+        textbook: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
       },
       {
         modelName: "ClassRoom",
@@ -76,7 +80,7 @@ module.exports = class ClassRoom extends Model {
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
         sequelize,
-        timestamps: true,
+        timestamps: false,
       }
     );
   }

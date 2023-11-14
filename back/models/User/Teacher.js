@@ -52,7 +52,17 @@ module.exports = class Teacher extends Model {
           zoomMeetingLink: {
             type: DataTypes.STRING,
             allowNull: true,
-          }
+          },
+          createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+          },
+          updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+          },
         },
         {
           modelName: "Teacher",
