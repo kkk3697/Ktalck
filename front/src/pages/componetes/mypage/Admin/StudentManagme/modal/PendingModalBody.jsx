@@ -43,7 +43,10 @@ const PendingModalBody = ({ selectedStudent, setPendingData }) => {
     setPendingData(만든데이터);
   };
   
-
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ko-KR').split('.').slice(0, 3).join('-').trim(); // 'YYYY-MM-DD' 형식으로 변환
+  }
   const updateZoomLink = async (tno) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/getZoomMeetingLink/${tno}`);
@@ -73,7 +76,7 @@ const PendingModalBody = ({ selectedStudent, setPendingData }) => {
       <div className="mb-3">
         <label className="form-label">신청일시:</label>
         <div style={{ border: '1px solid #ccc', backgroundColor: '#f5f5f5', padding: '10px' }}>
-          {selectedStudent?.createdAt}
+        {formatDate(selectedStudent?.createdAt)} 
         </div>
       </div>
       <div className="mb-3">

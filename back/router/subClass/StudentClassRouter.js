@@ -8,43 +8,48 @@ router.post('/saveModalData', async (req, res) => {
 
        let timeDifference, meetingDate, teacher, selectedZoomLink;
 
-            if (pendingData) {
+       if (pendingData) {
             ({ timeDifference, meetingDate, teacher, selectedZoomLink } = pendingData);
-            }
-            const existingStudent = await Student.findOne({
-                where: {
-                  stuNo: stuNo
-                }
-              });
-            const existingStudentClass = await StudentClass.findOne({
-            where: {
-                stuNo: stuNo
-            }
-        });
-        if (existingStudentClass) {
-            const updateData = {};
-            
-            if (pendingData) {
-                // pendingData가 있을 경우에만 이 부분 실행
-                updateData.timeDifference = timeDifference;
-                updateData.zoomMeetingData = meetingDate;
-                updateData.zoomMeetingTeacher = teacher;
-                updateData.zoomMeetingLink = selectedZoomLink;
+       }
 
-                await existingStudent.update({ StudentState: '1' });
+       const existingStudent = await Student.findOne({
+           where: { stuNo: stuNo }
+       });
 
-            } else {
-                // pendingData가 없는 경우에는 다른 로직을 넣거나,
-                // 필요한 정보만 updateData에 추가
-            }
-            
-            await existingStudentClass.update(updateData);
-            console.log('Update 성공');
-            res.status(201).json({ message: 'Data updated successfully' });
-        } else {
-            console.log('해당 학생 번호에 대한 StudentClass 데이터가 없습니다.');
-            res.status(404).json({ message: 'StudentClass not found' });
-        }
+       let existingStudentClass = await StudentClass.findOne({
+           where: { stuNo: stuNo }
+       });
+
+       // StudentClass 데이터가 없으면 새로 생성
+       if (!existingStudentClass && pendingData) {
+           existingStudentClass = await StudentClass.create({
+               stuNo: stuNo,
+               zoomMeetingTeacher: teacher,
+               zoomMeetingLink: selectedZoomLink,
+               timeDifference: timeDifference,
+               zoomMeetingData: meetingDate,
+               // 추가 필드가 있으면 여기에 추가
+           });
+           console.log('StudentClass 정보 생성 성공');
+       } else if (existingStudentClass && pendingData) {
+           // 이미 존재하는 StudentClass 데이터 업데이트
+           await existingStudentClass.update({
+               zoomMeetingTeacher: teacher,
+               zoomMeetingLink: selectedZoomLink,
+               timeDifference: timeDifference,
+               zoomMeetingData: meetingDate,
+               // 추가 필드가 있으면 여기에 추가
+           });
+           console.log('StudentClass 정보 업데이트 성공');
+       }
+
+       // 기타 필요한 업데이트 로직
+       if (existingStudent) {
+           // 예: 학생 상태 업데이트
+           await existingStudent.update({ StudentState: '1' });
+       }
+
+       res.status(201).json({ message: 'Data saved successfully' });
     } catch (error) {
         console.error('Error while saving modal data:', error);
         res.status(500).json({ message: 'Internal server error' });

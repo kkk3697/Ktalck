@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { Sequelize, User, Student,StudentClass } = require('.././../models');
+const { Sequelize, User, Student,Teacher,StudentClass } = require('.././../models');
 
 // Nested Routes for student
 router.get('/', (req, res) => {
@@ -18,7 +18,16 @@ router.get('/StuLoad', async (req, res) => {
         },
         {
           model: StudentClass,
-          attributes: ['discountRate']  // StudentClass에서 할인율 정보 추가
+          attributes: ['discountRate', 'zoomMeetingData', 'timeDifference'],
+          include: [
+            {
+              model: Teacher,
+              include: [{
+                model: User,
+                attributes: ['username'] // Teacher의 User 모델에서 필요한 속성
+              }]
+            }
+          ]
         }
       ]
     });

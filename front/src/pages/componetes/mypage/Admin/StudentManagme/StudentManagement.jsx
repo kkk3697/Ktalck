@@ -8,6 +8,9 @@ import ZoomCompletedModalBody from './modal/ZoomCompletedModalBody';
 import CurrentStudentBody from './modal/CurrentStudentBody';
 import AbsenceStudentBody from './modal/AbsenceStudentBody';
 
+import TableBody from './table/TableBody';
+import TableHeader from './table/TableHeader';
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const StudentManagement = () => {
@@ -26,11 +29,24 @@ const StudentManagement = () => {
   });
 
   const [modalData, setModalData] = useState({
-    pending: null,
-    zoomRegistered: null,
-    zoomCompleted: null,
-    currentStudent: null,
-    absenceStudent: null
+    pending: {
+      timeDifference: 0,
+      meetingDate: null,
+      zoomMeetingTeacher: null,
+      selectedZoomLink: null
+    },
+    zoomRegistered: {
+      // 여기에 줌미팅 등록과 관련된 초기 상태 값들을 설정
+    },
+    zoomCompleted: {
+      // 여기에 줌미팅 완료와 관련된 초기 상태 값들을 설정
+    },
+    currentStudent: {
+      // 여기에 현재 학생과 관련된 초기 상태 값들을 설정
+    },
+    absenceStudent: {
+      // 여기에 휴학 학생과 관련된 초기 상태 값들을 설정
+    }
   });
 
   const handleSaveData = async (newData, type) => {
@@ -75,7 +91,7 @@ const StudentManagement = () => {
     }
   };
   
-
+  
   const handleShowModal = (student) => {
     setSelectedStudent(student);
     setShowModal(true);
@@ -116,39 +132,10 @@ const StudentManagement = () => {
       </div>
       <table className="table table-striped" style={{ whiteSpace: 'nowrap' }}>
         <thead>
-          <tr>
-            <th>신청일시</th>
-            <th>이름</th>
-            <th>애칭</th>
-            <th>이메일</th>
-            <th>생년월일</th>
-            <th>국적</th>
-            <th>거주도시</th>
-            <th>등록 상황</th> 
-            <th>메모</th>
-          </tr>
+          <TableHeader status={selectedStatus} />
         </thead>
         <tbody>
-        {filteredStudents.map((student, index) => (  // 변경된 부분
-          <tr key={index}>
-            <td>{student.createdAt}</td>
-            <td onClick={() => handleShowModal(student)}>{student.User.username}</td>
-            <td onClick={() => handleShowModal(student)}>{student.Nickname}</td>
-            <td onClick={() => handleShowModal(student)}>{student.User.email}</td>
-            <td>{student.User.birth}</td>
-            <td>{student.User.Nationality}</td>
-            <td>{student.User.currentCity}</td>
-            <td>{
-              student.StudentState === 0 ? "잠정 가입" :
-              student.StudentState === 1 ? "줌미팅 등록 상태" :
-              student.StudentState === 2 ? "줌미팅 후 상태" :
-              student.StudentState === 3 ? "재학생" :
-              student.StudentState === 4 ? "휴학생" : "알 수 없는 상태"
-            }</td>
-            <td><button className="btn btn-secondary">메모</button></td>
-
-          </tr>
-        ))}
+        <TableBody status={selectedStatus} students={students} onShowModal={handleShowModal} />
       </tbody>
       </table>
       <button className="btn btn-info">더 보기</button>

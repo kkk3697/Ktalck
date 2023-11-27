@@ -84,11 +84,16 @@ module.exports = class StudentClass extends Model {
 });
   }
 
-static associate(db) {
-  db.StudentClass.belongsTo(db.Student, {
-    foreignKey: 'stuNo',
-    targetKey: 'stuNo'
-  });
-}
+  static associate(db) {
+    db.StudentClass.belongsTo(db.Student, {
+      foreignKey: 'stuNo',
+      targetKey: 'stuNo'
+    });
+  
+    db.StudentClass.belongsTo(db.Teacher, {
+      foreignKey: 'zoomMeetingTeacher',
+      targetKey: 'tno'
+    });
+  }
 }
 

@@ -85,6 +85,9 @@ module.exports = class Teacher extends Model {
         foreignKey: 'teacherId',
         sourceKey: 'tno'
       });
+       
+   
+
     }
     
   };
