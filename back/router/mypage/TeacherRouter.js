@@ -14,11 +14,9 @@ router.post('/TeacherCreate', async (req, res) => {
   const password = phoneNumber.slice(-4);
 
   try {
-    console.log(req.body);
     const registrationNumber = `${registrationNumberFront}-${registrationNumberBack}`;
     const birthFromRegNum = registrationNumberFront; // 생년월일 추출
-    console.log("registrationNumberFront:", registrationNumberFront);
-    
+
     const newUser = await User.create({
       email,
       username: memberName,
@@ -28,7 +26,6 @@ router.post('/TeacherCreate', async (req, res) => {
       currentCity: '도시 정보 여기에',
       level: 2
     }, { transaction: t });
-    console.log("Created User:", newUser.toJSON());
     if (newUser.level === 2) { 
 
       const combinedBankInfo = `${bankName} : ${accountNumber}`;

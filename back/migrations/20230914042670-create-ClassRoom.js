@@ -53,17 +53,17 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      weeklyFrequency: {
+      weeklyFrequency: { //주간빈도
         type: Sequelize.INTEGER,
         allowNull: true
       },
-      scheduleDays: {
+      scheduleDays: {     //수업요일
         type: Sequelize.STRING,
         allowNull: true
       },
-      classStatus: {
-        type: Sequelize.ENUM('ALL', 'ONGOING', 'ENDED'),
-        defaultValue: 'ALL',
+      classStatus: {      //클래스 상태
+        type: Sequelize.ENUM('ONGOING', 'ENDED'),
+        defaultValue: 'ONGOING',
         allowNull: false,
       },
       textbook: {

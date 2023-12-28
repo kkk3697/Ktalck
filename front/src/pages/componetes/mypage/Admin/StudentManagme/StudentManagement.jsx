@@ -27,7 +27,16 @@ const StudentManagement = () => {
     zoomMeetingTeacher: null,
     selectedZoomLink: null
   });
+  const [ZoomRegisteredData, setZoomRegistered] = useState({
+    zoomMeetingDataMemo : null,
+    Nickname : 0
+  });
 
+  const [ZoomCompletedData,setZoomCompleted] = useState({
+    classno : 0,
+    classTime : null,
+    scheduleDays : null
+  })
   const [modalData, setModalData] = useState({
     pending: {
       timeDifference: 0,
@@ -35,11 +44,14 @@ const StudentManagement = () => {
       zoomMeetingTeacher: null,
       selectedZoomLink: null
     },
-    zoomRegistered: {
-      // 여기에 줌미팅 등록과 관련된 초기 상태 값들을 설정
+    ZoomRegistered: {
+      zoomMeetingDataMemo : null,
+      NickName : 0
     },
     zoomCompleted: {
-      // 여기에 줌미팅 완료와 관련된 초기 상태 값들을 설정
+      classno : 0,
+      classTime : null,
+      scheduleDays : null
     },
     currentStudent: {
       // 여기에 현재 학생과 관련된 초기 상태 값들을 설정
@@ -48,49 +60,44 @@ const StudentManagement = () => {
       // 여기에 휴학 학생과 관련된 초기 상태 값들을 설정
     }
   });
-
-  const handleSaveData = async (newData, type) => {
-    // 먼저 로컬 상태 업데이트
-    setModalData({
-      ...modalData,
-      [type]: newData
-    });
-  
-    // 여기서 pendingData도 업데이트
-    setPendingData({
-      ...pendingData,
-    });
-  
-    // 서버로 데이터 전송
+  const fetchStudents = async () => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/saveModalData`, {
-        stuNo: selectedStudent.stuNo,
-        ...modalData,
-        [type]: newData,
-        pendingData 
-      });
-      if (response.status === 200 || response.status === 204 || response.status === 201)
-      {
-        console.log("데이터 저장 성공:", response.data);
-  
-        // 모달 닫기
-        handleCloseModal();
-        
-        // 새로운 학생 목록 불러오기
-        axios.get(`${API_BASE_URL}/StuLoad`)
-          .then(response => {
-            setStudents(response.data);
-          })
-          .catch(error => {
-            console.error('데이터를 불러오는 데 실패했습니다', error);
-          });
-  
-      }
+        const response = await axios.get(`${API_BASE_URL}/StuLoad`);
+        setStudents(response.data); // 서버로부터 받은 학생 데이터를 상태에 저장
     } catch (error) {
-      console.error("데이터 저장 실패:", error);
+        console.error('데이터를 불러오는 데 실패했습니다', error);
     }
+};
+
+//저장 버튼을 눌렀을때 전달할 데이터 
+const handleSaveData = async () => {
+  let dataToSend = {
+      stuNo: selectedStudent.stuNo,
   };
-  
+
+  if (selectedStudent.StudentState === 0) {
+      dataToSend.pendingData = pendingData;
+  } else if (selectedStudent.StudentState === 1) {
+      dataToSend.ZoomRegisteredData = ZoomRegisteredData;
+  }
+  else if(selectedStudent.StudentState == 2)
+  {
+    dataToSend.zoomCompletedData = ZoomCompletedData;
+  }
+
+  console.log("After merge - dataToSend:", dataToSend);
+
+    try {
+        const response = await axios.post(`${API_BASE_URL}/saveModalData`, dataToSend);
+        if (response.status === 200 || response.status === 204 || response.status === 201) {
+            // 성공 처리 로직
+            handleCloseModal();
+            fetchStudents();
+        }
+    } catch (error) {
+        console.error("데이터 저장 실패:", error);
+    }
+};
   
   const handleShowModal = (student) => {
     setSelectedStudent(student);
@@ -150,8 +157,8 @@ const StudentManagement = () => {
                 </div>
               <div className="modal-body">
               {selectedStudent.StudentState === 0 && <PendingModalBody setPendingData={setPendingData} selectedStudent={selectedStudent} />}
-              {selectedStudent.StudentState === 1 && <ZoomRegisteredModalBody setChildData={setChildData} selectedStudent={selectedStudent} />}
-              {selectedStudent.StudentState === 2 && <ZoomCompletedModalBody setChildData={setChildData} selectedStudent={selectedStudent} />}
+              {selectedStudent.StudentState === 1 && <ZoomRegisteredModalBody setZoomRegisteredData={setZoomRegistered} selectedStudent={selectedStudent} />}
+              {selectedStudent.StudentState === 2 && <ZoomCompletedModalBody setZoomCompletedData={setZoomCompleted} selectedStudent={selectedStudent} />}
               {selectedStudent.StudentState === 3 && <CurrentStudentBody setChildData={setChildData} selectedStudent={selectedStudent} />}
               {selectedStudent.StudentState === 4 && <AbsenceStudentBody setChildData={setChildData} selectedStudent={selectedStudent} />}
               </div>

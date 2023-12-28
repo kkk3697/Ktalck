@@ -91,20 +91,27 @@ const handleShowEdit = (classData) => {
   setSelectedClass(classData);
   setShowEditModal(true);
 };
+const handleShowActiveClasses = () => {
+  setClassStatus('ONGOING');
+};
 
-  const filteredClasses = classStatus === 'all' 
-  ? classesData.classes 
-  : classesData.classes.filter(cls => cls.status === classStatus);
+const handleShowEndedClasses = () => {
+  setClassStatus('ENDED');
+};
 
+const filteredClasses = classStatus === 'all' 
+    ? classesData.classes 
+    : classesData.classes.filter(cls => cls.classStatus === classStatus);
 
   return (
     <div className="container">
       <h1 className="mt-3 mb-3">클래스 관리</h1>
       <div className="mb-3 d-flex justify-content-between">
         <div>
-          <button className={`btn ${classStatus === 'all' ? "btn-primary" : "btn-secondary"}`} style={{ marginRight: '10px' }} onClick={() => setClassStatus('all')}>전체 클래스</button>
-          <button className={`btn ${classStatus === 'active' ? "btn-primary" : "btn-secondary"}`} style={{ marginRight: '10px' }} onClick={() => setClassStatus('active')}>활동 클래스</button>
-          <button className={`btn ${classStatus === 'ended' ? "btn-primary" : "btn-secondary"}`} style={{ marginRight: '10px' }} onClick={() => setClassStatus('ended')}>종료 클래스</button>
+        <button className={`btn ${classStatus === 'all' ? "btn-primary" : "btn-secondary"}`} style={{ marginRight: '10px' }} onClick={() => setClassStatus('all')}>전체 클래스</button>
+        <button className={`btn ${classStatus === 'ONGOING' ? "btn-primary" : "btn-secondary"}`} style={{ marginRight: '10px' }} onClick={() => setClassStatus('ONGOING')}>활동 클래스</button>
+        <button className={`btn ${classStatus === 'ENDED' ? "btn-primary" : "btn-secondary"}`} style={{ marginRight: '10px' }} onClick={() => setClassStatus('ENDED')}>종료 클래스</button>
+
         </div>
         <div>
         <button className="btn btn-secondary" onClick={toggleModal}>클래스 생성</button>
@@ -112,7 +119,7 @@ const handleShowEdit = (classData) => {
         </div>
       </div>
       <button style={{ marginRight: '10px' }} className="btn btn-secondary" onClick={() => handleViewModeChange('table')}>테이블 형태</button>
-<button className="btn btn-secondary" onClick={() => handleViewModeChange('box')}>상자 형태</button>
+      <button className="btn btn-secondary" onClick={() => handleViewModeChange('box')}>상자 형태</button>
       {viewMode === 'table' ? (
         // 테이블 뷰
         <table className="table table-striped">

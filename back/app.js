@@ -4,7 +4,7 @@ const app = express();
 const session = require('express-session');
 const loginRouter = require('./router/loginRouter.js');
 const signupRouter = require('./router/signupRouter.js');
-
+const path = require('path');
 const studentRouter = require('./router/mypage/StudentRouter.js');
 const teacherRouter = require('./router/mypage/TeacherRouter.js');
 const adminRouter = require('./router/mypage/AdminsRouter.js');
@@ -34,6 +34,15 @@ app.use('/api', teacherRouter );
 app.use('/api', adminRouter );
 app.use('/api',studentClassRouter);
 app.use('/api',classroomRouter);
+
+
+// React 앱 정적 파일 제공
+app.use(express.static(path.join(__dirname, 'build')));
+
+// 모든 요청을 index.html로 리디렉트 (SPA 라우팅 지원)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(4020, () => {
   console.log('Server running on http://localhost:4020');

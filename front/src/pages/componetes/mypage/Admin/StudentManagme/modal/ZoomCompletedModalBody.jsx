@@ -2,31 +2,35 @@
 
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-const ZoomCompletedModalBody = ({selectedStudent}) => {
+const ZoomCompletedModalBody = ({selectedStudent , setZoomCompletedData  }) => {
     const [Nickname  , setNickname ] = useState("");
-    const [teacher, setTeacher] = useState("");
-    const [TimeDifference ,setTimeDifference ] = useState(0);
-    const [MeetingDate, setMeetingDate ] = useState();
-    const [selectedZoomLink, setSelectedZoomLink] = useState();
-    const [teachers, setTeachers] = useState([]);
+    const [zoomMeetingMemo, setzoomMeetingMemo  ] = useState();
+    const studentClass = selectedStudent.StudentClasses && selectedStudent.StudentClasses.length > 0 
+    ? selectedStudent.StudentClasses[0] 
+    : null;
 
+    console.log(setZoomCompletedData);
+    const handleNicknameChange = (e) => {
+      setNickname(e.target.value);
+    };
+  
+    const handlesetzoomMeetingMemoChange = (e) => {
+      setzoomMeetingMemo(e.target.value);
+    };
+  
     useEffect(() => {
-        axios.get(`${API_BASE_URL}/teacherLoad`)
-          .then(response => {
-            setTeachers(response.data);
-          })
-          .catch(error => {
-            console.error('강사 데이터를 불러오는 데 실패했습니다', error);
-          });
-      }, []);
-
-
- 
+      setZoomCompletedData({
+        Nickname: Nickname,
+        zoomMeetingMemo: zoomMeetingMemo
+      });
+    }, [Nickname, zoomMeetingMemo]);
+  
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ko-KR').split('.').slice(0, 3).join('-').trim(); // 'YYYY-MM-DD' 형식으로 변환
+      }
+    
       return (
         <div>
        <div className="modal-body">
@@ -35,7 +39,7 @@ const ZoomCompletedModalBody = ({selectedStudent}) => {
           <div className="mb-3">
             <label className="form-label">신청일시:</label>
             <div style={{ border: '1px solid #ccc', backgroundColor: '#f5f5f5', padding: '10px' }}>
-              {selectedStudent?.createdAt}
+            {formatDate(selectedStudent?.createdAt)} 
             </div>
           </div>
           <div className="mb-3">
@@ -72,55 +76,41 @@ const ZoomCompletedModalBody = ({selectedStudent}) => {
             <label className="form-label">사용 언어:</label>
             <div style={{ border: '1px solid #ccc', backgroundColor: '#f5f5f5', padding: '10px' }}>{selectedStudent?.User.language}</div>
           </div>
+        
           <div className="mb-3">
-            <label className="form-label">신청시 메모:</label>
-            <div><button className = 'btn'>메모</button></div>
+            <label className="form-label">시차:</label>
+            <div style={{ border: '1px solid #ccc', backgroundColor: '#f5f5f5', padding: '10px' }}>
+              {studentClass ? studentClass.timeDifference : '정보 없음'}
+            </div>
           </div>
-        </div>
+          <div className="mb-3">
+              <label className="form-label">줌 미팅 예정일시:</label>
+              <div style={{ border: '1px solid #ccc', backgroundColor: '#f5f5f5', padding: '10px' }}>
+                {formatDate(studentClass ? studentClass.zoomMeetingData : '정보 없음')}
+              </div>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">줌 미팅 담당 선생님:</label>
+              <div style={{ border: '1px solid #ccc', backgroundColor: '#f5f5f5', padding: '10px' }}>
+                  {studentClass && studentClass.Teacher ? studentClass.Teacher.User.username : '정보 없음'}
+              </div>
+          </div>
+            <div className="mb-3">
+              <label className="form-label">줌 미팅 링크:</label>
+              <div style={{ border: '1px solid #ccc', backgroundColor: '#f5f5f5', padding: '10px' }}>
+                {studentClass ? studentClass.zoomMeetingLink : '정보 없음'}
+              </div>
+            </div>
+          </div>
+
         <div className="col-lg-6" style={{border: '1px solid #ccc', padding: '20px' }}> {/* 오른쪽 줌 미팅 부분 */}
     
-    <label htmlFor="nickname" className="form-label">애칭</label>
-    <input type="text" className="form-control" id="nickname" onChange={e => setNickname(e.target.value)} />
+      </div>
     
-    
-    <label htmlFor="timeDifference" className="form-label">시차</label>
-    <input type="number" className="form-control" id="timeDifference" onChange={e => setTimeDifference(e.target.value)} />
-    
-    
-    <label htmlFor="meetingDate" className="form-label">줌 미팅 예정일시</label>
-    <input type="datetime-local" className="form-control" id="meetingDate" onChange={e => setMeetingDate(e.target.value)} />
-    
-    
-    <label htmlFor="isFreeClassteacher" className="form-label">무료 수업 강사</label>
-    <select className="form-control" id="isFreeClassteacher" onChange={async e => {
-      console.log("Event target value:", e.target.value);
-      setTeacher(e.target.value);
-      const selectedTeacher = teachers.find(teacher => {
-        if (teacher.tno === undefined) {
-          console.log("tno is undefined for teacher: ", teacher);
-          return false;
-        }
-        return teacher.tno.toString() === e.target.value;
-      });
-      if (selectedTeacher && selectedTeacher.tno) {
-        await updateZoomLink(selectedTeacher.tno);
-      }
-    }}>
-      {teachers.map((teacher, index) => (
-        <option key={index} value={teacher.tno}>
-          {teacher.username}
-        </option>
-      ))}
-    </select>
-    
-    <label className="form-label">줌 미팅 링크</label>
-    <div className="form-control">
-      {selectedZoomLink}
-    </div>
      </div>
      </div>
     </div>
-        </div>
+
 );
     };
 

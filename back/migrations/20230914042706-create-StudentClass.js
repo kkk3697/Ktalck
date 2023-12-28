@@ -53,6 +53,10 @@ module.exports = {
       type: Sequelize.DATE,
       allowNull: true,
     },  
+    zoomMeetingDataMemo: {
+      type : Sequelize.TEXT,
+      allowNull : true
+    },
     zoomMeetingTeacher: {  // Zoom 미팅 강사 (고정)
       type: Sequelize.STRING,
       allowNull: true

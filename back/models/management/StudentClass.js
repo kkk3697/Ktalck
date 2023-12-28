@@ -57,6 +57,11 @@ module.exports = class StudentClass extends Model {
     allowNull: true,
   }
 ,
+zoomMeetingDataMemo: {
+  type : DataTypes.TEXT,
+  allowNull : true
+}
+,
   zoomMeetingTeacher: {  // Zoom 미팅 강사 (고정)
     type: DataTypes.STRING,
     allowNull: true

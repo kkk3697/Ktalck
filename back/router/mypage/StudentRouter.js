@@ -18,7 +18,7 @@ router.get('/StuLoad', async (req, res) => {
         },
         {
           model: StudentClass,
-          attributes: ['discountRate', 'zoomMeetingData', 'timeDifference'],
+          attributes: ['discountRate', 'zoomMeetingData', 'zoomMeetingDataMemo', 'timeDifference', 'zoomMeetingLink'],
           include: [
             {
               model: Teacher,
@@ -32,7 +32,6 @@ router.get('/StuLoad', async (req, res) => {
       ]
     });
     res.json(students);
-    console.log(students);
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');

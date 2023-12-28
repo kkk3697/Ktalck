@@ -14,6 +14,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('TeacherClass', 'classRoomId');
+    await zqueryInterface.removeColumn('TeacherClass', 'classRoomId');
   }
 };
